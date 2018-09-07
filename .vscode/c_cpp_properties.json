@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/src/apps",
+                "${workspaceFolder}/src/apps/demo_app",
+                "${workspaceFolder}/src/libs",
+                "${workspaceFolder}/src/libs/nano-stl",
+                "${workspaceFolder}/src/libs/nano-stl/conf",
+                "${workspaceFolder}/src/libs/nano-stl/containers",
+                "${workspaceFolder}/src/libs/nano-stl/helpers",
+                "${workspaceFolder}/src/libs/nano-stl/interfaces",
+                "${workspaceFolder}/src/libs/nano-stl/memory"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:\\mingw32\\bin\\i686-w64-mingw32-gcc.exe",
+            "intelliSenseMode": "clang-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}
