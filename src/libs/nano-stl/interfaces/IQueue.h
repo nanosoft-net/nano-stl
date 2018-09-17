@@ -17,23 +17,28 @@ You should have received a copy of the GNU Lesser General Public License
 along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NANO_STL_H
-#define NANO_STL_H
+#ifndef IQUEUE_H
+#define IQUEUE_H
 
-#include "ArrayCount.h"
-#include "ForEach.h"
+#include "IContainer.h"
 
-#include "StaticArray.h"
-#include "StaticVector.h"
-#include "StaticList.h"
-#include "StaticMap.h"
-#include "StaticQueue.h"
+namespace nano_stl
+{
 
-#include "StaticBSTree.h"
+/** \brief Interface for all queues implementations */
+template <typename ItemType>
+class IQueue : public IContainer<ItemType>
+{
+    public:
 
-#include "StaticString.h"
-#include "StringView.h"
+        /** \brief Add an item to the queue */
+        virtual bool push(const ItemType& item) = 0;
 
+        /** \brief Remove the oldest item from the queue */
+        virtual bool pop(ItemType& item) = 0;
 
+};
 
-#endif // NANO_STL_H
+}
+
+#endif // IQUEUE_H

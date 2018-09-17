@@ -17,23 +17,33 @@ You should have received a copy of the GNU Lesser General Public License
 along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NANO_STL_H
-#define NANO_STL_H
+#ifndef STATICQUEUE_H
+#define STATICQUEUE_H
 
-#include "ArrayCount.h"
-#include "ForEach.h"
+#include "QueueBase.h"
 
-#include "StaticArray.h"
-#include "StaticVector.h"
-#include "StaticList.h"
-#include "StaticMap.h"
-#include "StaticQueue.h"
+namespace nano_stl
+{
 
-#include "StaticBSTree.h"
+/** \brief Static queue implementation 
+ *         The queue memory is statically allocated by the class.
+*/
+template <typename ItemType, nano_stl_size_t MAX_ITEM_COUNT>
+class StaticQueue : public QueueBase<ItemType>
+{
+    public:
 
-#include "StaticString.h"
-#include "StringView.h"
+        /** \brief Constructor */
+        StaticQueue() : QueueBase<ItemType>(m_items, MAX_ITEM_COUNT)
+        {}
 
+    private:
 
+        /** \brief Internal C array */
+        ItemType m_items[MAX_ITEM_COUNT];
 
-#endif // NANO_STL_H
+};
+
+}
+
+#endif // STATICQUEUE_H

@@ -23,8 +23,12 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 #if (__cplusplus < 201103L)
 #include "stdint.h"
+#include "stddef.h"
+#include "stdarg.h"
 #else // __cplusplus
 #include <cstdint>
+#include <cstddef>
+#include <cstdarg>
 #endif // __cplusplus
 
 namespace nano_stl

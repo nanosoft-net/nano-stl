@@ -17,23 +17,31 @@ You should have received a copy of the GNU Lesser General Public License
 along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NANO_STL_H
-#define NANO_STL_H
+#ifndef IRINGBUFFER_H
+#define IRINGBUFFER_H
 
-#include "ArrayCount.h"
-#include "ForEach.h"
+#include "IContainer.h"
 
-#include "StaticArray.h"
-#include "StaticVector.h"
-#include "StaticList.h"
-#include "StaticMap.h"
-#include "StaticQueue.h"
+namespace nano_stl
+{
 
-#include "StaticBSTree.h"
+/** \brief Interface for all ring buffers implementations */
+template <typename ItemType>
+class IRingBuffer : public IContainer<ItemType>
+{
+    public:
 
-#include "StaticString.h"
-#include "StringView.h"
+        /** \brief Write an item into the ring buffer */
+        virtual bool write(const ItemType& item) = 0;
 
+        /** \brief Read an item from the ring buffer */
+        virtual bool read(ItemType& item) = 0;
 
+        /** \brief Remove all the items from the ring buffer */
+        virtual void clear() = 0;
 
-#endif // NANO_STL_H
+};
+
+}
+
+#endif // IRINGBUFFER_H
