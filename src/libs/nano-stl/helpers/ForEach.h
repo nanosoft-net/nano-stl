@@ -60,13 +60,13 @@ struct ForEachConstHelper
 
 /** \brief Macro to iterate through a container */
 #define foreach(var, container, type) \
-for (ForEachHelper<type> foreach_helper((container)); foreach_helper.iter != foreach_helper.cont.end(); ++foreach_helper.iter, foreach_helper.loop = true) \
+for (nano_stl::ForEachHelper<type> foreach_helper((container)); foreach_helper.iter != foreach_helper.cont.end(); ++foreach_helper.iter, foreach_helper.loop = true) \
 		for (type& var = (*foreach_helper.iter); foreach_helper.loop; foreach_helper.loop = false)
 
 
 /** \brief Macro to const iterate through a container */
 #define foreach_const(var, container, type) \
-for (ForEachConstHelper<type> foreach_helper((container)); foreach_helper.iter != foreach_helper.cont.cend(); ++foreach_helper.iter, foreach_helper.loop = true) \
+for (nano_stl::ForEachConstHelper<type> foreach_helper((container)); foreach_helper.iter != foreach_helper.cont.cend(); ++foreach_helper.iter, foreach_helper.loop = true) \
 		for (const type& var = (*foreach_helper.iter); foreach_helper.loop; foreach_helper.loop = false)
 
 
