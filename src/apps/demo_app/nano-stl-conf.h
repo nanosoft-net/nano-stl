@@ -52,7 +52,7 @@ typedef uint32_t nano_stl_size_t;
 /* Containers configuration options */
 
 /** \brief Enable the use of iterators (increase code size) */
-#define NANO_STL_ITERATORS_ENABLED                      0
+#define NANO_STL_ITERATORS_ENABLED                      1
 
 
 

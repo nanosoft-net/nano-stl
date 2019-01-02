@@ -24,6 +24,9 @@
 include $(ROOT_DIR)/build/make/compilers/mingw.compiler
 
 
+# Nano-STL configuration
+NANO_STL_CONFIG_FILE_DIR=$(ROOT_DIR)/src/apps/demo_app
+
 # Target lib dependencies
 TARGET_DEPENDENCIES=
 
