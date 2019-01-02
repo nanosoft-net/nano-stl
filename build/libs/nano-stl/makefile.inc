@@ -30,6 +30,7 @@ SOURCE_DIRS := $(LIBRARY_DIR) \
                $(LIBRARY_DIR)/containers \
                $(LIBRARY_DIR)/helpers \
                $(LIBRARY_DIR)/interfaces \
+               $(LIBRARY_DIR)/libc \
                $(LIBRARY_DIR)/memory \
                $(LIBRARY_DIR)/strings \
               

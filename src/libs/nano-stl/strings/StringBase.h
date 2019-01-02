@@ -184,7 +184,7 @@ class StringBase : public IString
         /** \brief Format a string */
         virtual void format(const char* format, va_list arg_list)
         {
-            int ret = vsnprintf(m_c_str, m_size + 1u, format, arg_list);
+            int ret = NANO_STL_VSNPRINTF(m_c_str, m_size + 1u, format, arg_list);
             if (ret <= 0)
             {
                 m_length = 0u;
@@ -219,7 +219,7 @@ class StringBase : public IString
             }
 
             // Copy new string
-            memcpy(m_c_str, copy.cStr(), m_length);
+            NANO_STL_MEMCPY(m_c_str, copy.cStr(), m_length);
 
             // Terminate string
             m_c_str[m_length] = 0;
@@ -255,7 +255,7 @@ class StringBase : public IString
             }
 
             // Copy new string
-            memcpy(&m_c_str[m_length], str.cStr(), copy_size);
+            NANO_STL_MEMCPY(&m_c_str[m_length], str.cStr(), copy_size);
 
             // Terminate string
             m_c_str[m_length] = 0;
