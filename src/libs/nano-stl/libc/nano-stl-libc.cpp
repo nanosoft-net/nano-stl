@@ -44,7 +44,7 @@ static int NANO_STL_LIBC_PutHexa(char *str, char fill, int width, unsigned char 
 /** \brief Highly portable but non-efficient memset function */
 void* NANO_STL_LIBC_Memset(void* const dst, const int val, size_t size)
 {
-    if (dst != NULL)
+    if (dst != nullptr)
     {
         const uint8_t u8_val = (uint8_t)(val);
         uint8_t* u8_dst = (uint8_t*)(dst);
@@ -62,7 +62,7 @@ void* NANO_STL_LIBC_Memset(void* const dst, const int val, size_t size)
 /** \brief Highly portable but non-efficient memcpy function */
 void* NANO_STL_LIBC_Memcpy(void* const dst, const void* const src, size_t size)
 {
-    if ((dst != NULL) && (src != NULL))
+    if ((dst != nullptr) && (src != nullptr))
     {
         uint8_t* u8_src = (uint8_t*)(src);
         uint8_t* u8_dst = (uint8_t*)(dst);
@@ -83,7 +83,7 @@ int NANO_STL_LIBC_Memcmp(const void* const s1, const void* const s2, size_t size
 {
     int ret = 0;
 
-    if ((s1 != NULL) && (s2 != NULL))
+    if ((s1 != nullptr) && (s2 != nullptr))
     {
         uint8_t* u8_s1 = (uint8_t*)(s1);
         uint8_t* u8_s2 = (uint8_t*)(s2);
@@ -114,7 +114,7 @@ int NANO_STL_LIBC_Strncmp(const char* s1, const char* s2, size_t size)
 {
     int ret = 0;
 
-    if ((s1 != NULL) && (s2 != NULL))
+    if ((s1 != nullptr) && (s2 != nullptr))
     {
         while ((size != 0u) && (ret == 0))
         {
@@ -147,7 +147,7 @@ size_t NANO_STL_LIBC_Strnlen(const char* s, size_t maxlen)
 {
     size_t size = 0;
 
-    if (s != NULL)
+    if (s != nullptr)
     {
         while (((*s) != 0) && (size != maxlen))
         {
@@ -164,7 +164,7 @@ char* NANO_STL_LIBC_Strncat(char *dest, const char *src, size_t size)
 {
     char* ret = dest;
 
-    if ((dest != NULL) && (src != NULL))
+    if ((dest != nullptr) && (src != nullptr))
     {
         while ((*dest) != 0)
         {
@@ -190,7 +190,7 @@ char* NANO_STL_LIBC_Strncpy(char *dest, const char *src, size_t size)
 {
     char* ret = dest;
 
-    if ((dest != NULL) && (src != NULL))
+    if ((dest != nullptr) && (src != nullptr))
     {
         while ((size != 0) && ((*src) != 0))
         {
@@ -287,7 +287,7 @@ int NANO_STL_LIBC_Vsnprintf(char *str, size_t size, const char *format, va_list 
         }
     }
 
-    /* NULL-terminated (final \0 is not counted) */
+    /* nullptr-terminated (final \0 is not counted) */
     if ((size_t)(current_size) < size) 
     {
         *str = 0;
@@ -320,7 +320,7 @@ int NANO_STL_LIBC_Atoi(const char* str)
     int res = 0;
     unsigned char negative = 0u;
 
-    if (str != NULL)
+    if (str != nullptr)
     {
         if ((*str) == '-')
         {
@@ -353,7 +353,7 @@ char* NANO_STL_LIBC_Itoa(int value, char * str, int base)
     char* inv_str;
     char* ret = str;
 
-    if (str != NULL)
+    if (str != nullptr)
     {
         if (value < 0)
         {

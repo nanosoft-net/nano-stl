@@ -84,13 +84,13 @@ class ZeroSizeArray : public IArray<ItemType>
         /** \brief Get an item at a specified index */
         virtual ItemType& operator [] (const nano_stl_size_t index)
         {
-            return (*reinterpret_cast<ItemType*>(NULL));
+            return (*reinterpret_cast<ItemType*>(nullptr));
         }
 
         /** \brief Get an item at a specified index */
         virtual const ItemType& operator [] (const nano_stl_size_t index) const
         {
-            return (*reinterpret_cast<ItemType*>(NULL));
+            return (*reinterpret_cast<ItemType*>(nullptr));
         }
 
     private:

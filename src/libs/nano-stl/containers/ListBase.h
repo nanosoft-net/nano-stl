@@ -38,12 +38,12 @@ class ListBase : public IList<ItemType>
         : m_items(items)
         , m_size(size)
         , m_count(0u)
-        , m_first(NULL)
-        , m_last(NULL)
+        , m_first(nullptr)
+        , m_last(nullptr)
         , m_first_free(items)
-        , m_begin(*this, NULL)
-        , m_end(*this, NULL)
-        , m_it(*this, NULL)
+        , m_begin(*this, nullptr)
+        , m_end(*this, nullptr)
+        , m_it(*this, nullptr)
         , m_const_begin(m_begin)
         , m_const_end(m_end)
         , m_const_it(m_it)
@@ -54,7 +54,7 @@ class ListBase : public IList<ItemType>
             {
                 m_first_free[i].next = &m_first_free[i+1];
             }
-            m_first_free[size - 1u].next = NULL;
+            m_first_free[size - 1u].next = nullptr;
         }
 
 
@@ -73,7 +73,7 @@ class ListBase : public IList<ItemType>
             bool found = false;
 
             typename IList<ItemType>::Item* current = m_first;
-            while (!found && (current != NULL))
+            while (!found && (current != nullptr))
             {
                 if (item == current->value)
                 {
@@ -120,7 +120,7 @@ class ListBase : public IList<ItemType>
             bool ret = false;
 
             // Check for free space
-            if (m_first_free != NULL)
+            if (m_first_free != nullptr)
             {
                 typename IList<ItemType>::Item* const new_item = m_first_free;
 
@@ -129,16 +129,16 @@ class ListBase : public IList<ItemType>
 
                 // Add item at the start of the list
                 new_item->value = item;
-                new_item->previous = NULL;
+                new_item->previous = nullptr;
                 new_item->next = m_first;
-                if (m_first != NULL)
+                if (m_first != nullptr)
                 {
                     m_first->previous = new_item;
                 }
                 setFirst(new_item);
 
                 // Check if the list was empty
-                if (m_last == NULL)
+                if (m_last == nullptr)
                 {
                     setLast(new_item);
                 }
@@ -158,20 +158,20 @@ class ListBase : public IList<ItemType>
             bool ret = false;
 
             // Check for empty list
-            if (m_first != NULL)
+            if (m_first != nullptr)
             {
                 typename IList<ItemType>::Item* const del_item = m_first;
 
                 // Remove item from list
                 item = m_first->value;
                 setFirst(m_first->next);
-                if (m_first != NULL)
+                if (m_first != nullptr)
                 {
-                    m_first->previous = NULL;
+                    m_first->previous = nullptr;
                 }     
                 else
                 {
-                    setLast(NULL);
+                    setLast(nullptr);
                 }           
                 
 
@@ -194,7 +194,7 @@ class ListBase : public IList<ItemType>
             bool ret = false;
 
             // Check for free space
-            if (m_first_free != NULL)
+            if (m_first_free != nullptr)
             {
                 typename IList<ItemType>::Item* const new_item = m_first_free;
 
@@ -204,15 +204,15 @@ class ListBase : public IList<ItemType>
                 // Add item at the end of the list
                 new_item->value = item;
                 new_item->previous = m_last;
-                new_item->next = NULL;
-                if (m_last != NULL)
+                new_item->next = nullptr;
+                if (m_last != nullptr)
                 {
                     m_last->next = new_item;
                 }
                 setLast(new_item);
 
                 // Check if the list was empty
-                if (m_first == NULL)
+                if (m_first == nullptr)
                 {
                     setFirst(new_item);
                 }
@@ -232,20 +232,20 @@ class ListBase : public IList<ItemType>
             bool ret = false;
 
             // Check for empty list
-            if (m_last != NULL)
+            if (m_last != nullptr)
             {
                 typename IList<ItemType>::Item* const del_item = m_last;
 
                 // Remove item from list
                 item = m_last->value;
                 setLast(m_last->previous);
-                if (m_last != NULL)
+                if (m_last != nullptr)
                 {
-                    m_last->next = NULL;
+                    m_last->next = nullptr;
                 }     
                 else
                 {
-                    setFirst(NULL);
+                    setFirst(nullptr);
                 }           
 
                 // Add item to the free list
@@ -267,7 +267,7 @@ class ListBase : public IList<ItemType>
             bool ret = false;
 
             // Check for free space and matching iterator
-            if ((m_first_free != NULL) && 
+            if ((m_first_free != nullptr) && 
                 (&position.getIterable() == static_cast<IIterable<ItemType>*>(this)))
             {
                 typename IList<ItemType>::Item* const new_item = m_first_free;
@@ -279,27 +279,27 @@ class ListBase : public IList<ItemType>
                 typename IList<ItemType>::Item* const next_item = IList<ItemType>::getItem(position);
                 new_item->value = item;
                 new_item->next = next_item;
-                if (next_item != NULL)
+                if (next_item != nullptr)
                 {
                     new_item->previous = next_item->previous;
-                    if (next_item->previous != NULL)
+                    if (next_item->previous != nullptr)
                     {
                         next_item->previous->next = new_item;
                     }
                 }
                 else
                 {
-                    if (m_last != NULL)
+                    if (m_last != nullptr)
                     {
                         m_last->next = new_item;
                         new_item->previous = m_last;
                     }
                     setLast(new_item);
                 }
-                if ((m_first == NULL) || (m_first == next_item))
+                if ((m_first == nullptr) || (m_first == next_item))
                 {
                     setFirst(new_item);
-                    new_item->previous = NULL;
+                    new_item->previous = nullptr;
                 }
 
                 // Update list count
@@ -317,7 +317,7 @@ class ListBase : public IList<ItemType>
             bool ret = false;
 
             // Check for free space and matching iterator
-            if ((m_first_free != NULL) && 
+            if ((m_first_free != nullptr) && 
                 (&position.getIterable() == static_cast<IIterable<ItemType>*>(this)))
             {
                 // Remove the item
@@ -346,7 +346,7 @@ class ListBase : public IList<ItemType>
                 typename IList<ItemType>::Item* const last_item = IList<ItemType>::getItem(last);
 
                 // Remove items
-                if (first_item->previous != NULL)
+                if (first_item->previous != nullptr)
                 {
                     first_item->previous->next = last_item;
                 }                
@@ -354,7 +354,7 @@ class ListBase : public IList<ItemType>
                 {
                     setFirst(last_item);
                 }
-                if (last_item != NULL)
+                if (last_item != nullptr)
                 {
                     last_item->previous = first_item->previous;
                 }
@@ -364,7 +364,7 @@ class ListBase : public IList<ItemType>
                 }
 
                 // Update count
-                typename IList<ItemType>::Item* item_before_last = NULL;
+                typename IList<ItemType>::Item* item_before_last = nullptr;
                 for (typename IList<ItemType>::Item* item = first_item; item != last_item; item = item->next)
                 {
                     m_count--;
@@ -392,8 +392,8 @@ class ListBase : public IList<ItemType>
                 m_first_free = m_first;
 
                 // Clear list
-                setFirst(NULL);
-                setLast(NULL);
+                setFirst(nullptr);
+                setLast(nullptr);
                 m_count = 0u;
             }
         }

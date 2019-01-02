@@ -50,9 +50,9 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         : m_nodes(nodes)
         , m_size(size)
         , m_count(0u)
-        , m_root(NULL)
+        , m_root(nullptr)
         , m_first_free(nodes)
-        , m_last_modified(NULL)
+        , m_last_modified(nullptr)
         {
             // Initialize free list
             initFreeList();
@@ -73,7 +73,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         {
             bool contains = false;
 
-            if (m_root != NULL)
+            if (m_root != nullptr)
             {
                 contains = nodeContains(m_root, item);
             }
@@ -89,15 +89,15 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         virtual ItemType& operator [] (const KeyType& key)
         {
             bool left = false;
-            Node* current = NULL;
-            Node* parent = NULL;
+            Node* current = nullptr;
+            Node* parent = nullptr;
             if (lookForKey(key, current, parent, left))
             {
                 return current->item;
             }
             else
             {
-                return (*reinterpret_cast<ItemType*>(NULL));
+                return (*reinterpret_cast<ItemType*>(nullptr));
             }
         }
 
@@ -105,15 +105,15 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         virtual const ItemType& operator [] (const KeyType& key) const
         {
             bool left = false;
-            Node* current = NULL;
-            Node* parent = NULL;
+            Node* current = nullptr;
+            Node* parent = nullptr;
             if (lookForKey(key, current, parent, left))
             {
                 return current->item;
             }
             else
             {
-                return (*reinterpret_cast<const ItemType*>(NULL));
+                return (*reinterpret_cast<const ItemType*>(nullptr));
             }
         }
 
@@ -123,12 +123,12 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             bool ret = false;
 
             // Check for free space
-            if (m_first_free != NULL)
+            if (m_first_free != nullptr)
             {
                 // Look for the key
                 bool left = false;
-                Node* current = NULL;
-                Node* parent = NULL;
+                Node* current = nullptr;
+                Node* parent = nullptr;
                 const bool found = lookForKey(key, current, parent, left);
                 if (!found)
                 {
@@ -141,10 +141,10 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
                     // Init node
                     new_node->key = key;
                     new_node->item = item;
-                    new_node->left = NULL;
-                    new_node->right = NULL;
+                    new_node->left = nullptr;
+                    new_node->right = nullptr;
 
-                    if (parent == NULL)
+                    if (parent == nullptr)
                     {
                         m_root = new_node;
                     }
@@ -174,8 +174,8 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         virtual bool containsKey(const KeyType& key) const
         {
             bool left = false;
-            Node* current = NULL;
-            Node* parent = NULL;
+            Node* current = nullptr;
+            Node* parent = nullptr;
             return lookForKey(key, current, parent, left);
         }
 
@@ -184,8 +184,8 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         {
             // Look for the item
             bool left = false;
-            Node* current = NULL;
-            Node* parent = NULL;
+            Node* current = nullptr;
+            Node* parent = nullptr;
             const bool found = lookForKey(key, current, parent, left);
             if (found)
             {
@@ -201,25 +201,25 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         {
             // Look for the item
             bool left = false;
-            Node* current = NULL;
-            Node* parent = NULL;
+            Node* current = nullptr;
+            Node* parent = nullptr;
             const bool found = lookForKey(key, current, parent, left);
             if (found)
             {
                 // Remove item node
-                Node* child = NULL;
-                if (current->right == NULL)
+                Node* child = nullptr;
+                if (current->right == nullptr)
                 {
                     child = current->left;
                 }
                 else
                 {
                     child = current->right;
-                    if (current->left != NULL)
+                    if (current->left != nullptr)
                     {
                         Node* previous = current->right;
                         Node* most_left_node = current->right->left;
-                        while (most_left_node != NULL)
+                        while (most_left_node != nullptr)
                         {
                             previous = most_left_node;
                             most_left_node = most_left_node->left;
@@ -229,7 +229,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
                 }
 
                 // Affect new child node to parent
-                if (parent != NULL)
+                if (parent != nullptr)
                 {
                     if (left)
                     {
@@ -267,7 +267,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
 
                 // Clear list
                 m_count = 0u;
-                m_root = NULL;
+                m_root = nullptr;
                 m_last_modified = 0u;
             }
         }
@@ -310,7 +310,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             {
                 m_first_free[i].right = &m_first_free[i+1];
             }
-            m_first_free[m_size - 1u].right = NULL;
+            m_first_free[m_size - 1u].right = nullptr;
         }
 
         /** \brief Look for a key in the binary search tree */
@@ -319,9 +319,9 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             bool found = false;
 
             left = false;
-            parent = NULL;
+            parent = nullptr;
             current = m_root;
-            while (!found && (current != NULL))
+            while (!found && (current != nullptr))
             {
                 if (key > current->key)
                 {
@@ -355,11 +355,11 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             }
             else
             {
-                if (node->left != NULL)
+                if (node->left != nullptr)
                 {
                     contains = nodeContains(node->left, item);
                 }
-                if (!contains && (node->right != NULL))
+                if (!contains && (node->right != nullptr))
                 {
                     contains = nodeContains(node->right, item);
                 }

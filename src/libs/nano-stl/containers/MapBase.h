@@ -37,11 +37,11 @@ class MapBase : public IMap<KeyType, ItemType>
         /** \brief Constructor */
         MapBase(IBSTree<KeyType, typename IMap<KeyType, ItemType>::Node>& bstree)
         : m_bstree(bstree)
-        , m_first(NULL)
-        , m_last(NULL)
-        , m_begin(*this, NULL)
-        , m_end(*this, NULL)
-        , m_it(*this, NULL)
+        , m_first(nullptr)
+        , m_last(nullptr)
+        , m_begin(*this, nullptr)
+        , m_end(*this, nullptr)
+        , m_it(*this, nullptr)
         , m_const_begin(m_begin)
         , m_const_end(m_end)
         , m_const_it(m_it)
@@ -107,9 +107,9 @@ class MapBase : public IMap<KeyType, ItemType>
             if (ret)
             {
                 typename IMap<KeyType, ItemType>::Node* added_node = m_bstree.getLastModified();
-                added_node->previous = NULL;
+                added_node->previous = nullptr;
                 added_node->next = m_first;
-                if (m_first != NULL)
+                if (m_first != nullptr)
                 {
                     m_first->previous = added_node;
                 }
@@ -149,7 +149,7 @@ class MapBase : public IMap<KeyType, ItemType>
             if (ret)
             {
                 typename IMap<KeyType, ItemType>::Node* added_node = m_bstree.getLastModified();
-                if (added_node->previous != NULL)
+                if (added_node->previous != nullptr)
                 {
                     added_node->previous->next = added_node->next;
                 }
@@ -157,7 +157,7 @@ class MapBase : public IMap<KeyType, ItemType>
                 {
                     setFirst(added_node->next);
                 }
-                if (added_node->next != NULL)
+                if (added_node->next != nullptr)
                 {
                     added_node->next->previous = added_node->previous;
                 }
@@ -174,8 +174,8 @@ class MapBase : public IMap<KeyType, ItemType>
         virtual void clear()
         {
             m_bstree.clear();
-            setFirst(NULL);
-            setLast(NULL);
+            setFirst(nullptr);
+            setLast(nullptr);
         }
 
     protected:

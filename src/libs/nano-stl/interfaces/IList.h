@@ -102,14 +102,14 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 ConstIterator(const IList<ItemType>& list)
                 : m_list(&list)
                 , m_current(m_list.getFirst())
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Constructor */
                 ConstIterator(const IList<ItemType>& list, const typename IList<ItemType>::Item* const position)
                 : m_list(&list)
                 , m_current(position)
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Copy constructor */
@@ -135,10 +135,10 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the next element */
                 virtual void operator ++ ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
                         m_current = m_current->next;
-                        if (m_current == NULL)
+                        if (m_current == nullptr)
                         {
                             m_position = IIteratorBase<ItemType>::INVALID_POSITION;
                         }
@@ -152,9 +152,9 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the previous element */
                 virtual void operator -- ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
-                        if (m_current->previous != NULL)
+                        if (m_current->previous != nullptr)
                         {
                             m_current = m_current->previous;
                             m_position--;
@@ -213,14 +213,14 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 Iterator(IList<ItemType>& list)
                 : m_list(&list)
                 , m_current(m_list->getFirst())
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Constructor */
                 Iterator(IList<ItemType>& list, typename IList<ItemType>::Item* const position)
                 : m_list(&list)
                 , m_current(position)
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Copy constructor */
@@ -239,10 +239,10 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the next element */
                 virtual void operator ++ ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
                         m_current = m_current->next;
-                        if (m_current == NULL)
+                        if (m_current == nullptr)
                         {
                             m_position = IIteratorBase<ItemType>::INVALID_POSITION;
                         }
@@ -256,9 +256,9 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the previous element */
                 virtual void operator -- ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
-                        if (m_current->previous != NULL)
+                        if (m_current->previous != nullptr)
                         {
                             m_current = m_current->previous;
                             m_position--;

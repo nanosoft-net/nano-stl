@@ -28,7 +28,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 void* operator new (std::size_t size)
 {
-    return NULL;
+    return nullptr;
 }
 
 void operator delete (void* ptr)
@@ -38,7 +38,7 @@ void operator delete (void* ptr)
 
 void* operator new[] (std::size_t size)
 {
-    return NULL;
+    return nullptr;
 }
 
 void operator delete[] (void* ptr)

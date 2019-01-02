@@ -25,6 +25,12 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdint.h>
 #include <stddef.h>
 #include <stdarg.h>
+
+#ifndef NULL
+#define NULL 0
+#endif // NULL
+#define nullptr NULL
+
 #else // __cplusplus
 #include <cstdint>
 #include <cstddef>

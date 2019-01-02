@@ -71,9 +71,9 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
             /** \brief Copy operator */
             Node& operator = (const Node& copy)
             {
-                if (copy.pitem != NULL)
+                if (copy.pitem != nullptr)
                 {
-                    if (pitem != NULL)
+                    if (pitem != nullptr)
                     {
                         pitem = copy.pitem;
                     }
@@ -84,7 +84,7 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 }
                 else
                 {
-                    if (pitem != NULL)
+                    if (pitem != nullptr)
                     {
                         pitem = &copy.item;
                     }
@@ -101,9 +101,9 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
             {
                 bool equals;
 
-                if (node.pitem != NULL)
+                if (node.pitem != nullptr)
                 {
-                    if (pitem != NULL)
+                    if (pitem != nullptr)
                     {
                         equals = (pitem == node.pitem);
                     }
@@ -114,7 +114,7 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 }
                 else
                 {
-                    if (pitem != NULL)
+                    if (pitem != nullptr)
                     {
                         equals = (pitem == &node.item);
                     }
@@ -153,14 +153,14 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 ConstIterator(const IMap<KeyType, ItemType>& map)
                 : m_map(&map)
                 , m_current(m_map.getFirst())
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Constructor */
                 ConstIterator(const IMap<KeyType, ItemType>& map, const typename IMap<KeyType, ItemType>::Node* const position)
                 : m_map(&map)
                 , m_current(position)
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Copy constructor */
@@ -186,10 +186,10 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the next element */
                 virtual void operator ++ ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
                         m_current = m_current->next;
-                        if (m_current == NULL)
+                        if (m_current == nullptr)
                         {
                             m_position = IIteratorBase<ItemType>::INVALID_POSITION;
                         }
@@ -203,9 +203,9 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the previous element */
                 virtual void operator -- ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
-                        if (m_current->previous != NULL)
+                        if (m_current->previous != nullptr)
                         {
                             m_current = m_current->previous;
                             m_position--;
@@ -264,14 +264,14 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 Iterator(IMap<KeyType, ItemType>& map)
                 : m_map(&map)
                 , m_current(m_map->getFirst())
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Constructor */
                 Iterator(IMap<KeyType, ItemType>& map, typename IMap<KeyType, ItemType>::Node* const position)
                 : m_map(&map)
                 , m_current(position)
-                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Copy constructor */
@@ -290,10 +290,10 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the next element */
                 virtual void operator ++ ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
                         m_current = m_current->next;
-                        if (m_current == NULL)
+                        if (m_current == nullptr)
                         {
                             m_position = IIteratorBase<ItemType>::INVALID_POSITION;
                         }
@@ -307,9 +307,9 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the previous element */
                 virtual void operator -- ()
                 {
-                    if (m_current != NULL)
+                    if (m_current != nullptr)
                     {
-                        if (m_current->previous != NULL)
+                        if (m_current->previous != nullptr)
                         {
                             m_current = m_current->previous;
                             m_position--;
