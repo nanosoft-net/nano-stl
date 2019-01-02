@@ -21,6 +21,9 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+/** \brief Highly portable but non-efficient atoi function with string length check */
+static int NANO_STL_LIBC_Antoi(const char* str, size_t size);
+
 /** \brief  Writes a character inside the given string */
 static int NANO_STL_LIBC_PutChar(char *str, char c);
 
@@ -317,31 +320,7 @@ int NANO_STL_LIBC_Snprintf(char *str, size_t size, const char *format, ...)
 /** \brief Highly portable but non-efficient atoi function */
 int NANO_STL_LIBC_Atoi(const char* str)
 {
-    int res = 0;
-    unsigned char negative = 0u;
-
-    if (str != nullptr)
-    {
-        if ((*str) == '-')
-        {
-            negative = 1u;
-            str++;
-        }
-
-        while ((*str) != 0)
-        {
-            int val = (*str) - '0';
-            res = (res * 10u) + val;
-            str++;
-        }
-
-        if (negative == 1u)
-        {
-            res = -1 * res;
-        }
-    }
-
-    return res;
+    return NANO_STL_LIBC_Antoi(str, static_cast<size_t>(0xFFFFFFFFu));
 }
 
 /** \brief Highly portable but non-efficient itoa function */
@@ -388,6 +367,95 @@ char* NANO_STL_LIBC_Itoa(int value, char * str, int base)
     return ret;
 }
 
+/** \brief Highly portable but non-efficient atof function */
+double NANO_STL_LIBC_Atof(const char* nptr)
+{
+	int count = 0;
+	double res = 0.;
+	double int_part = 0;
+	const char* int_part_str = nptr;
+	double dec_part = 0;
+	const char* dec_part_str;
+	unsigned char negative = 0u;
+
+	if ((nptr != nullptr) && ((*nptr) != 0))
+	{
+		if ((*nptr) == '-')
+		{
+			negative = 1u;
+			nptr++;
+			int_part_str++;
+		}
+
+		while (((*nptr) != 0) && ((*nptr) != '.'))
+		{
+			count++;
+			nptr++;
+		}
+		int_part = static_cast<double>(NANO_STL_LIBC_Antoi(int_part_str, count));
+
+		if ((*nptr) == '.')
+		{
+			nptr++;
+		}
+		count = 0;
+		dec_part_str = nptr;
+		while ((*nptr) != 0)
+		{
+			count++;
+			nptr++;
+		}
+		dec_part = static_cast<double>(NANO_STL_LIBC_Antoi(dec_part_str, count));
+		int dec_count = NANO_STL_STRNLEN(dec_part_str, count);
+		while (dec_count != 0)
+		{
+			dec_part /= 10.;
+			dec_count--;
+		}
+
+		res = int_part + dec_part;
+
+		if (negative == 1u)
+        {
+            res = -1. * res;
+        }
+	}
+
+	return res;
+}
+
+
+/** \brief Highly portable but non-efficient atoi function with string length check */
+static int NANO_STL_LIBC_Antoi(const char* str, size_t size)
+{
+    int res = 0;
+    unsigned char negative = 0u;
+
+    if ((str != nullptr) && (size != 0))
+    {
+        if ((*str) == '-')
+        {
+            negative = 1u;
+            str++;
+			size--;
+        }
+
+        while (((*str) != 0) && (size != 0))
+        {
+            int val = (*str) - '0';
+            res = (res * 10u) + val;
+            str++;
+			size--;
+        }
+
+        if (negative == 1u)
+        {
+            res = -1 * res;
+        }
+    }
+
+    return res;
+}
 
 
 /** \brief  Writes a character inside the given string */

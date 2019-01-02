@@ -32,13 +32,15 @@ class MapBase : public IMap<KeyType, ItemType>
 {
     public:
 
-        
-
         /** \brief Constructor */
         MapBase(IBSTree<KeyType, typename IMap<KeyType, ItemType>::Node>& bstree)
         : m_bstree(bstree)
         , m_first(nullptr)
         , m_last(nullptr)
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         , m_begin(*this, nullptr)
         , m_end(*this, nullptr)
         , m_it(*this, nullptr)
@@ -46,6 +48,8 @@ class MapBase : public IMap<KeyType, ItemType>
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+        
+#endif // NANO_STL_ITERATORS_ENABLED
         {}
 
 
@@ -67,6 +71,10 @@ class MapBase : public IMap<KeyType, ItemType>
         }
 
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         ////// Implementation of IIterable interface //////
 
 
@@ -87,6 +95,8 @@ class MapBase : public IMap<KeyType, ItemType>
 
         /** \brief Get the const iterator of the container */
         virtual IConstIterator<ItemType>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
         ////// Implementation of IMap interface //////
@@ -192,6 +202,9 @@ class MapBase : public IMap<KeyType, ItemType>
         ////// Implementation of MapBase methods //////
 
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         /** \brief Get the iterator which points to the start of the container */
         const void begin(typename IMap<KeyType, ItemType>::Iterator& it) const { it = m_begin; }
 
@@ -203,6 +216,8 @@ class MapBase : public IMap<KeyType, ItemType>
 
         /** \brief Get the const iterator which points to the end of the container */
         const void cend(typename IMap<KeyType, ItemType>::ConstIterator& it) const { it = m_const_end; }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
     private:
@@ -217,6 +232,9 @@ class MapBase : public IMap<KeyType, ItemType>
         /** \brief Last node */
         typename IMap<KeyType, ItemType>::Node* m_last;
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Iterator to the beginning of the map */
         typename IMap<KeyType, ItemType>::Iterator m_begin;
@@ -239,14 +257,21 @@ class MapBase : public IMap<KeyType, ItemType>
         /** \brief Pointer to the const iterator of the container */
         typename IMap<KeyType, ItemType>::ConstIterator* const m_pconst_it;
 
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
         /** \brief Set the first node of the list and update the iterators */
         void setFirst(typename IMap<KeyType, ItemType>::Node* const first)
         {
             m_first = first;
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
             m_begin = typename IMap<KeyType, ItemType>::Iterator(*this, m_first);
             m_const_begin = m_begin;
+
+#endif // NANO_STL_ITERATORS_ENABLED
         }
 
         /** \brief Set the last node of the list and update the iterators */

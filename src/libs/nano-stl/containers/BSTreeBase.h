@@ -306,7 +306,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         {
             // Put back all the nodes into the free list
             m_first_free = m_nodes;
-            for (uint32_t i = 0; i < (m_size - 1u); i++)
+            for (nano_stl_size_t i = 0; i < (m_size - 1u); i++)
             {
                 m_first_free[i].right = &m_first_free[i+1];
             }

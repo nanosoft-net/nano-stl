@@ -22,6 +22,10 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "nano-stl-conf.h"
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
 namespace nano_stl
 {
 
@@ -104,5 +108,7 @@ class IConstIterator : public IteratorBase<ItemType>
 };
 
 }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 #endif // IITERATOR_H

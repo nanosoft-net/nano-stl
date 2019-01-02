@@ -32,9 +32,14 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
 {
     public:
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         // Iterator forward declaration
         class Iterator;
         class ConstIterator;
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
         /** \brief Add an item at the start of the list */
         virtual bool pushFront(const ItemType& item) = 0;
@@ -48,6 +53,9 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
         /** \brief Remove the item at the end of the list */
         virtual bool popBack(ItemType& item) = 0;
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         /** \brief Insert an item at a specific location (before item pointed by the iterator) */
         virtual bool insert(const Iterator& position, const ItemType& item) = 0;
 
@@ -59,6 +67,8 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
 
         /** \brief Remove all the items from the list */
         virtual void clear() = 0;
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
     protected:
@@ -79,6 +89,9 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
 
         /** \brief Get the last item of the list */
         virtual Item* getLast() const = 0;
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the underlying item of an iterator */
         Item* getItem(const Iterator& it) const { return it.m_current; }
@@ -102,14 +115,14 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 ConstIterator(const IList<ItemType>& list)
                 : m_list(&list)
                 , m_current(m_list.getFirst())
-                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Constructor */
                 ConstIterator(const IList<ItemType>& list, const typename IList<ItemType>::Item* const position)
                 : m_list(&list)
                 , m_current(position)
-                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Copy constructor */
@@ -135,10 +148,10 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the next element */
                 virtual void operator ++ ()
                 {
-                    if (m_current != nullptr)
+                    if (m_current != NULL)
                     {
                         m_current = m_current->next;
-                        if (m_current == nullptr)
+                        if (m_current == NULL)
                         {
                             m_position = IIteratorBase<ItemType>::INVALID_POSITION;
                         }
@@ -152,9 +165,9 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the previous element */
                 virtual void operator -- ()
                 {
-                    if (m_current != nullptr)
+                    if (m_current != NULL)
                     {
-                        if (m_current->previous != nullptr)
+                        if (m_current->previous != NULL)
                         {
                             m_current = m_current->previous;
                             m_position--;
@@ -213,14 +226,14 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 Iterator(IList<ItemType>& list)
                 : m_list(&list)
                 , m_current(m_list->getFirst())
-                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Constructor */
                 Iterator(IList<ItemType>& list, typename IList<ItemType>::Item* const position)
                 : m_list(&list)
                 , m_current(position)
-                , m_position((m_current == nullptr) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
+                , m_position((m_current == NULL) ? IIteratorBase<ItemType>::INVALID_POSITION : 0u)
                 {}
 
                 /** \brief Copy constructor */
@@ -239,10 +252,10 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the next element */
                 virtual void operator ++ ()
                 {
-                    if (m_current != nullptr)
+                    if (m_current != NULL)
                     {
                         m_current = m_current->next;
-                        if (m_current == nullptr)
+                        if (m_current == NULL)
                         {
                             m_position = IIteratorBase<ItemType>::INVALID_POSITION;
                         }
@@ -256,9 +269,9 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Move to the previous element */
                 virtual void operator -- ()
                 {
-                    if (m_current != nullptr)
+                    if (m_current != NULL)
                     {
-                        if (m_current->previous != nullptr)
+                        if (m_current->previous != NULL)
                         {
                             m_current = m_current->previous;
                             m_position--;
@@ -292,6 +305,8 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Current position */
                 nano_stl_size_t m_position;
         };
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 };
 

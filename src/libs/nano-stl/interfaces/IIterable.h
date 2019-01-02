@@ -32,6 +32,9 @@ class IIterable
 {
     public:
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         /** \brief Get the iterator which points to the start of the container */
         virtual const IIterator<ItemType>& begin() const = 0;
 
@@ -49,6 +52,9 @@ class IIterable
 
         /** \brief Get the const iterator of the container */
         virtual IConstIterator<ItemType>& const_it() const = 0;
+
+#endif // NANO_STL_ITERATORS_ENABLED
+
 };
 
 }

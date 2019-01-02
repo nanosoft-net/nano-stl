@@ -136,6 +136,9 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
         virtual Node* getLast() const = 0;
 
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
     public:
 
         // Iterator forward declaration
@@ -344,6 +347,7 @@ class IMap : public IContainer<ItemType>, public IIterable<ItemType>
                 nano_stl_size_t m_position;
         };
 
+#endif // NANO_STL_ITERATORS_ENABLED
 
 };
 

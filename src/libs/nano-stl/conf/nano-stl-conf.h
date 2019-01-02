@@ -48,14 +48,24 @@ typedef uint32_t nano_stl_size_t;
 
 //////////////////////////////// Options /////////////////////////////////
 
+
+/* Containers configuration options */
+
+/** \brief Enable the use of iterators (increase code size) */
+#define NANO_STL_ITERATORS_ENABLED                      0
+
+
+
+
+
 /* Memory management configuration options */
 
 /** \brief No dynamic memory allocation will be allowed */
-#define NANO_STL_DYNAMIC_MEMORY_ALLOCATION_DISABLED     0u
+#define NANO_STL_DYNAMIC_MEMORY_ALLOCATION_DISABLED     0
 /** \brief Dynamic memory allocation will be performed by C malloc/free functions */
-#define NANO_STL_DYNAMIC_MEMORY_ALLOCATION_MALLOC       1u
+#define NANO_STL_DYNAMIC_MEMORY_ALLOCATION_MALLOC       1
 /** \brief Dynamic memory allocation will be performed by C++ standard new/delete implementation or by another library */
-#define NANO_STL_DYNAMIC_MEMORY_ALLOCATION_STANDARD     2u
+#define NANO_STL_DYNAMIC_MEMORY_ALLOCATION_STANDARD     2
 
 /** \brief Memory management configuration
  *         Valid values are:
@@ -124,6 +134,8 @@ typedef uint32_t nano_stl_size_t;
 /** \brief Itoa macro definition */
 #define NANO_STL_ITOA(value, str, base) NANO_STL_LIBC_Itoa((value), (str), (base))
 
+/** \brief Atof macro definition */
+#define NANO_STL_ATOF(str) NANO_STL_LIBC_Atof((str))
 
 
 #endif // NANO_STL_CONF_H

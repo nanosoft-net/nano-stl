@@ -40,6 +40,10 @@ class StringBase : public IString
         : m_c_str(c_str)
         , m_size(size - 1u)
         , m_length(0u)
+
+    // Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         , m_begin(*this, IIteratorBase<char>::INVALID_POSITION)
         , m_end(*this, IIteratorBase<char>::INVALID_POSITION)
         , m_it(*this, 0u)
@@ -47,13 +51,19 @@ class StringBase : public IString
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+
+#endif // NANO_STL_ITERATORS_ENABLED
         {}
 
         /** \brief Constructor */
         StringBase(char c_str[], const nano_stl_size_t size, const char init_str[])
         : m_c_str(c_str)
         , m_size(size - 1u)
-        , m_length(static_cast<nano_stl_size_t>(strlen(init_str)))
+        , m_length(static_cast<nano_stl_size_t>(NANO_STL_STRNLEN(init_str, size)))
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         , m_begin(*this, IIteratorBase<char>::INVALID_POSITION)
         , m_end(*this, IIteratorBase<char>::INVALID_POSITION)
         , m_it(*this, 0u)
@@ -61,24 +71,36 @@ class StringBase : public IString
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+
+#endif // NANO_STL_ITERATORS_ENABLED
         {
             // Update iterators
             if (m_length > m_size)
             {
                 m_length = m_size;
             }
+
+            // Check if iterators are enabled
+            #if (NANO_STL_ITERATORS_ENABLED == 1)
+
             if (m_length != 0u)
             {
                 m_begin = typename IArray<char>::Iterator(*this, 0u);
                 m_const_begin = m_begin;
             }
+
+            #endif // NANO_STL_ITERATORS_ENABLED
         }
 
         /** \brief Constructor */
         StringBase(char c_str[])
         : m_c_str(c_str)
-        , m_size(static_cast<nano_stl_size_t>(strlen(m_c_str)))
+        , m_size(static_cast<nano_stl_size_t>(NANO_STL_STRNLEN(m_c_str, static_cast<size_t>(0xFFFFFFFFu))))
         , m_length(m_size)
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         , m_begin(*this, IIteratorBase<char>::INVALID_POSITION)
         , m_end(*this, IIteratorBase<char>::INVALID_POSITION)
         , m_it(*this, 0u)
@@ -86,13 +108,21 @@ class StringBase : public IString
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+
+#endif // NANO_STL_ITERATORS_ENABLED
         {
+
+            // Check if iterators are enabled
+            #if (NANO_STL_ITERATORS_ENABLED == 1)
+
             // Update iterators
             if (m_length != 0u)
             {
                 m_begin = typename IArray<char>::Iterator(*this, 0u);
                 m_const_begin = m_begin;
             }
+
+            #endif // NANO_STL_ITERATORS_ENABLED
         }
 
         ////// Implementation of IContainer interface //////
@@ -121,6 +151,9 @@ class StringBase : public IString
         }
 
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         ////// Implementation of IIterable interface //////
 
         
@@ -141,6 +174,8 @@ class StringBase : public IString
 
         /** \brief Get the const iterator of the container */
         virtual IConstIterator<char>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
         ////// Implementation of IArray interface //////
@@ -190,16 +225,27 @@ class StringBase : public IString
                 m_length = 0u;
                 m_c_str[0u] = 0;
 
+                // Check if iterators are enabled
+                #if (NANO_STL_ITERATORS_ENABLED == 1)
+
                 m_begin = typename IArray<char>::Iterator(*this, IIteratorBase<char>::INVALID_POSITION);
                 m_const_begin = m_begin;
+
+                #endif // NANO_STL_ITERATORS_ENABLED
             }
             else
             {
+                // Check if iterators are enabled
+                #if (NANO_STL_ITERATORS_ENABLED == 1)
+
                 if (m_length == 0u)
                 {
                     m_begin = typename IArray<char>::Iterator(*this, 0u);
                     m_const_begin = m_begin;
                 }
+
+                #endif // NANO_STL_ITERATORS_ENABLED
+                
                 m_length = static_cast<nano_stl_size_t>(ret);
             }
         }
@@ -224,6 +270,9 @@ class StringBase : public IString
             // Terminate string
             m_c_str[m_length] = 0;
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
             // Update iterators
             if (m_length == 0u)
             {
@@ -235,6 +284,8 @@ class StringBase : public IString
                 m_begin = typename IArray<char>::Iterator(*this, 0u);
                 m_const_begin = m_begin;
             }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
             return (*this);
         }
@@ -260,6 +311,9 @@ class StringBase : public IString
             // Terminate string
             m_c_str[m_length] = 0;
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
             // Update iterators
             if (m_length == 0u)
             {
@@ -271,6 +325,8 @@ class StringBase : public IString
                 m_begin = typename IArray<char>::Iterator(*this, 0u);
                 m_const_begin = m_begin;
             }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
             return (*this);
         }
@@ -285,7 +341,7 @@ class StringBase : public IString
             if (str.getLenght() == m_length)
             {
                 // Compare strings
-                ret = (strcmp(m_c_str, str.cStr()) == 0);
+                ret = (NANO_STL_STRNCMP(m_c_str, str.cStr(), m_size) == 0);
             }
 
             return ret;
@@ -298,7 +354,7 @@ class StringBase : public IString
         /** \brief Compare operator */
         virtual bool operator > (const IString& str) const
         {
-            return (strcmp(m_c_str, str.cStr()) > 0);
+            return (NANO_STL_STRNCMP(m_c_str, str.cStr(), m_size) > 0);
         }
 
         /** \brief Compare operator */
@@ -307,6 +363,9 @@ class StringBase : public IString
 
         ////// Implementation of StringBase methods //////
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the iterator which points to the start of the container */
         const void begin(typename IArray<char>::Iterator& it) const { it = m_begin; }
@@ -320,6 +379,8 @@ class StringBase : public IString
         /** \brief Get the const iterator which points to the end of the container */
         const void cend(typename IArray<char>::ConstIterator& it) const { it = m_const_end; }
 
+#endif // NANO_STL_ITERATORS_ENABLED
+
 
     private:
 
@@ -332,6 +393,9 @@ class StringBase : public IString
         /** \brief String length */
         nano_stl_size_t m_length;
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
         
         /** \brief Iterator to the beginning of the array */
         typename IArray<char>::Iterator m_begin;
@@ -353,6 +417,9 @@ class StringBase : public IString
 
         /** \brief Pointer to the const iterator of the container */
         typename IArray<char>::ConstIterator* const m_pconst_it;
+
+#endif // NANO_STL_ITERATORS_ENABLED
+
 };
 
 }

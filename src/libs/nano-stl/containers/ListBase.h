@@ -31,8 +31,6 @@ class ListBase : public IList<ItemType>
 {
     public:
 
-        
-
         /** \brief Constructor */
         ListBase(typename IList<ItemType>::Item* const items, const nano_stl_size_t size)
         : m_items(items)
@@ -41,6 +39,10 @@ class ListBase : public IList<ItemType>
         , m_first(nullptr)
         , m_last(nullptr)
         , m_first_free(items)
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         , m_begin(*this, nullptr)
         , m_end(*this, nullptr)
         , m_it(*this, nullptr)
@@ -48,9 +50,11 @@ class ListBase : public IList<ItemType>
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+
+#endif // NANO_STL_ITERATORS_ENABLED
         {
             // Initialize free list
-            for (uint32_t i = 0; i < (size - 1u); i++)
+            for (nano_stl_size_t i = 0; i < (size - 1u); i++)
             {
                 m_first_free[i].next = &m_first_free[i+1];
             }
@@ -89,6 +93,9 @@ class ListBase : public IList<ItemType>
         }
 
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         ////// Implementation of IIterable interface //////
 
 
@@ -109,6 +116,8 @@ class ListBase : public IList<ItemType>
 
         /** \brief Get the const iterator of the container */
         virtual IConstIterator<ItemType>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
         ////// Implementation of IList interface //////
@@ -261,6 +270,10 @@ class ListBase : public IList<ItemType>
             return ret;
         }
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         /** \brief Insert an item at a specific location (before item pointed by the iterator) */
         virtual bool insert(const typename IList<ItemType>::Iterator& position, const ItemType& item)
         {
@@ -381,6 +394,8 @@ class ListBase : public IList<ItemType>
             return ret;
         }
 
+#endif // NANO_STL_ITERATORS_ENABLED
+
         /** \brief Remove all the items from the list */
         virtual void clear()
         {
@@ -412,6 +427,10 @@ class ListBase : public IList<ItemType>
 
         ////// Implementation of ListBase methods //////
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         /** \brief Get the iterator which points to the start of the container */
         const void begin(typename IList<ItemType>::Iterator& it) const { it = m_begin; }
 
@@ -424,6 +443,7 @@ class ListBase : public IList<ItemType>
         /** \brief Get the const iterator which points to the end of the container */
         const void cend(typename IList<ItemType>::ConstIterator& it) const { it = m_const_end; }
 
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
     private:
@@ -437,6 +457,7 @@ class ListBase : public IList<ItemType>
         /** \brief Item count */
         nano_stl_size_t m_count;
 
+
         /** \brief First item */
         typename IList<ItemType>::Item* m_first;
 
@@ -446,6 +467,9 @@ class ListBase : public IList<ItemType>
         /** \brief First free item */
         typename IList<ItemType>::Item* m_first_free;
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Iterator to the beginning of the list */
         typename IList<ItemType>::Iterator m_begin;
@@ -468,13 +492,21 @@ class ListBase : public IList<ItemType>
         /** \brief Pointer to the const iterator of the container */
         typename IList<ItemType>::ConstIterator* const m_pconst_it;
 
+#endif // NANO_STL_ITERATORS_ENABLED
+
 
         /** \brief Set the first item of the list and update the iterators */
         void setFirst(typename IList<ItemType>::Item* const first)
         {
             m_first = first;
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
             m_begin = typename IList<ItemType>::Iterator(*this, m_first);
             m_const_begin = m_begin;
+
+#endif // NANO_STL_ITERATORS_ENABLED
         }
 
         /** \brief Set the last item of the list and update the iterators */

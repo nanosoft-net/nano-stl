@@ -38,6 +38,8 @@ class IArray : public IContainer<ItemType>, public IIterable<ItemType>
         /** \brief Get an item at a specified index */
         virtual const ItemType& operator [] (const nano_stl_size_t index) const = 0;
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         // Iterator forward declaration
         class Iterator;
@@ -206,6 +208,9 @@ class IArray : public IContainer<ItemType>, public IIterable<ItemType>
                 /** \brief Current position */
                 nano_stl_size_t m_current;
         };
+
+#endif // NANO_STL_ITERATORS_ENABLED
+
 };
 
 }

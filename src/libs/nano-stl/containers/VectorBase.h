@@ -36,6 +36,10 @@ class VectorBase : public IVector<ItemType>
         : m_items(items)
         , m_size(size)
         , m_count(0u)
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         , m_begin(*this, IIteratorBase<ItemType>::INVALID_POSITION)
         , m_end(*this, IIteratorBase<ItemType>::INVALID_POSITION)
         , m_it(*this, IIteratorBase<ItemType>::INVALID_POSITION)
@@ -43,6 +47,8 @@ class VectorBase : public IVector<ItemType>
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+
+#endif // NANO_STL_ITERATORS_ENABLED
         {}
 
 
@@ -72,6 +78,9 @@ class VectorBase : public IVector<ItemType>
         }
 
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
        /** \brief Get the iterator which points to the start of the container */
         virtual const IIterator<ItemType>& begin() const { return m_begin; }
 
@@ -89,6 +98,8 @@ class VectorBase : public IVector<ItemType>
 
         /** \brief Get the const iterator of the container */
         virtual IConstIterator<ItemType>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
         ////// Implementation of IArray interface //////
@@ -120,12 +131,17 @@ class VectorBase : public IVector<ItemType>
                 m_items[m_count] = item;
                 m_count++;
 
+                // Check if iterators are enabled
+                #if (NANO_STL_ITERATORS_ENABLED == 1)
+
                 // Update iterators
                 if (m_count == 1u)
                 {
                     m_begin = typename IArray<ItemType>::Iterator(*this, 0u);
                     m_const_begin = m_begin;
                 }
+
+                #endif // NANO_STL_ITERATORS_ENABLED
 
                 ret = true;
             }
@@ -143,12 +159,17 @@ class VectorBase : public IVector<ItemType>
                 item = m_items[m_count - 1u];
                 m_count--;
 
+                // Check if iterators are enabled
+                #if (NANO_STL_ITERATORS_ENABLED == 1)
+
                 // Update iterators
                 if (m_count == 0u)
                 {
                     m_begin = typename IArray<ItemType>::Iterator(*this, IIteratorBase<ItemType>::INVALID_POSITION);
                     m_const_begin = m_begin;
                 }
+
+                #endif // NANO_STL_ITERATORS_ENABLED
 
                 ret = true;
             }
@@ -162,14 +183,22 @@ class VectorBase : public IVector<ItemType>
             // Update count
             m_count = 0u;
 
+            // Check if iterators are enabled
+            #if (NANO_STL_ITERATORS_ENABLED == 1)
+
             // Update iterators
             m_begin = typename IArray<ItemType>::Iterator(*this, IIteratorBase<ItemType>::INVALID_POSITION);
             m_const_begin = m_begin;
+
+            #endif // NANO_STL_ITERATORS_ENABLED
         }
 
 
         ////// Implementation of VectorBase methods //////
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the iterator which points to the start of the container */
         const void begin(typename IArray<ItemType>::Iterator& it) const { it = m_begin; }
@@ -183,6 +212,7 @@ class VectorBase : public IVector<ItemType>
         /** \brief Get the const iterator which points to the end of the container */
         const void cend(typename IArray<ItemType>::ConstIterator& it) const { it = m_const_end; }
 
+#endif // NANO_STL_ITERATORS_ENABLED
 
 
     private:
@@ -196,6 +226,9 @@ class VectorBase : public IVector<ItemType>
         /** \brief Item count */
         nano_stl_size_t m_count;
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Iterator to the beginning of the array */
         typename IArray<ItemType>::Iterator m_begin;
@@ -217,6 +250,9 @@ class VectorBase : public IVector<ItemType>
 
         /** \brief Pointer to the const iterator of the container */
         typename IArray<ItemType>::ConstIterator* const m_pconst_it;
+
+#endif // NANO_STL_ITERATORS_ENABLED
+
 };
 
 }

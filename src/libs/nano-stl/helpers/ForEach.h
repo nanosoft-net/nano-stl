@@ -22,6 +22,10 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "IIterable.h"
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
 namespace nano_stl
 {
 
@@ -71,5 +75,7 @@ for (nano_stl::ForEachConstHelper<type> foreach_helper((container)); foreach_hel
 
 
 }
+
+#endif // NANO_STL_ITERATORS_ENABLED
 
 #endif // FOREACH_H

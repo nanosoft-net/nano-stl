@@ -62,6 +62,9 @@ int NANO_STL_LIBC_Atoi(const char* str);
 /** \brief Higly portable but non-efficient itoa function */
 char* NANO_STL_LIBC_Itoa(int value, char * str, int base);
 
+/** \brief Highly portable but non-efficient atof function */
+double NANO_STL_LIBC_Atof(const char* nptr);
+
 
 #ifdef __cplusplus
 }

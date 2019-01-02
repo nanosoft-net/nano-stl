@@ -29,14 +29,16 @@ namespace nano_stl
 template <typename ItemType>
 class ArrayBase : public IArray<ItemType>
 {
-    public:
-
-        
+    public:    
 
         /** \brief Constructor */
         ArrayBase(ItemType* const items, const nano_stl_size_t size)
         : m_items(items)
         , m_size(size)
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         , m_begin(*this, 0u)
         , m_end(*this, IIteratorBase<ItemType>::INVALID_POSITION)
         , m_it(*this, 0u)
@@ -44,6 +46,8 @@ class ArrayBase : public IArray<ItemType>
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+
+#endif // NANO_STL_ITERATORS_ENABLED
         {}
 
 
@@ -73,6 +77,9 @@ class ArrayBase : public IArray<ItemType>
         }
 
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         ////// Implementation of IIterable interface //////
 
         
@@ -94,6 +101,8 @@ class ArrayBase : public IArray<ItemType>
         /** \brief Get the const iterator of the container */
         virtual IConstIterator<ItemType>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
 
+#endif // NANO_STL_ITERATORS_ENABLED
+
 
         ////// Implementation of IArray interface //////
 
@@ -114,6 +123,9 @@ class ArrayBase : public IArray<ItemType>
         ////// Implementation of ArrayBase methods //////
 
 
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         /** \brief Get the iterator which points to the start of the container */
         const void begin(typename IArray<ItemType>::Iterator& it) const { it = m_begin; }
 
@@ -126,6 +138,8 @@ class ArrayBase : public IArray<ItemType>
         /** \brief Get the const iterator which points to the end of the container */
         const void cend(typename IArray<ItemType>::ConstIterator& it) const { it = m_const_end; }
 
+#endif // NANO_STL_ITERATORS_ENABLED
+
 
     private:
 
@@ -135,7 +149,10 @@ class ArrayBase : public IArray<ItemType>
         /** \brief Underlying C array size */
         const nano_stl_size_t m_size;
 
-        
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         /** \brief Iterator to the beginning of the array */
         const typename IArray<ItemType>::Iterator m_begin;
 
@@ -156,6 +173,9 @@ class ArrayBase : public IArray<ItemType>
 
         /** \brief Pointer to the const iterator of the container */
         typename IArray<ItemType>::ConstIterator* const m_pconst_it;
+
+#endif // NANO_STL_ITERATORS_ENABLED
+
 };
 
 }

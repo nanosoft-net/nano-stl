@@ -34,6 +34,10 @@ class ZeroSizeArray : public IArray<ItemType>
 
         /** \brief Constructor */
         ZeroSizeArray()
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
+
         : m_begin(*this, 0u)
         , m_end(*this, IIteratorBase<ItemType>::INVALID_POSITION)
         , m_it(*this, 0u)
@@ -41,6 +45,8 @@ class ZeroSizeArray : public IArray<ItemType>
         , m_const_end(m_end)
         , m_const_it(m_it)
         , m_pconst_it(&m_const_it)
+
+#endif // NANO_STL_ITERATORS_ENABLED
         {}
 
         ////// Implementation of IContainer interface //////
@@ -55,6 +61,9 @@ class ZeroSizeArray : public IArray<ItemType>
         /** \brief Check if the container contains an item */
         virtual bool contains(const ItemType& item) const { return false; }
 
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         ////// Implementation of IIterable interface //////
 
@@ -77,6 +86,8 @@ class ZeroSizeArray : public IArray<ItemType>
         /** \brief Get the const iterator of the container */
         virtual IConstIterator<ItemType>& const_it() const { return (*m_pconst_it); }
 
+#endif // NANO_STL_ITERATORS_ENABLED
+
 
         ////// Implementation of IArray interface //////
 
@@ -94,6 +105,10 @@ class ZeroSizeArray : public IArray<ItemType>
         }
 
     private:
+
+
+// Check if iterators are enabled
+#if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Iterator to the beginning of the array */
         const typename IArray<ItemType>::Iterator m_begin;
@@ -115,6 +130,9 @@ class ZeroSizeArray : public IArray<ItemType>
 
         /** \brief Pointer to the const iterator of the container */
         typename IArray<ItemType>::ConstIterator* const m_pconst_it;
+
+#endif // NANO_STL_ITERATORS_ENABLED
+
 
 };
 
