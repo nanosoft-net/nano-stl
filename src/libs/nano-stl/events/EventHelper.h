@@ -21,14 +21,15 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define EVENTHELPER_H
 
 
-// Check C++ version >= C++11
-#if (__cplusplus >= 201103L)
-
 #include "Event.h"
 #include "StaticArray.h"
 
 namespace nano_stl
 {
+
+// Check C++ version >= C++11
+#if (__cplusplus >= 201103L)
+
 
 /** \brief Helper for event instanciation */
 template<uint32_t MAX_DELEGATE_COUNT, typename... args>
@@ -41,7 +42,8 @@ class EventHelper : public Event<args...>
         : Event<args...>(m_delegates)
         , m_delegates()
         {
-            for (nano_stl_size_t i = 0; i < m_delegates.getCount(); i++)
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; i < size; i++)
             {
                 m_delegates[i] = NULL;
             }
@@ -54,8 +56,38 @@ class EventHelper : public Event<args...>
         StaticArray< const IDelegate<void, args...>*, MAX_DELEGATE_COUNT > m_delegates;
 };
 
-}
+
+#else // __cplusplus
+
+
+/** \brief Helper for event instanciation */
+template<uint32_t MAX_DELEGATE_COUNT, typename ArgType>
+class EventHelper : public Event<ArgType>
+{
+    public:
+
+        /** \brief Constructor */
+        EventHelper()
+        : Event<ArgType>(m_delegates)
+        , m_delegates()
+        {
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; i < size; i++)
+            {
+                m_delegates[i] = NULL;
+            }
+        }
+
+
+    private:
+
+        /** \brief Delegates to receive the event */
+        StaticArray< const IDelegate<void, ArgType>*, MAX_DELEGATE_COUNT > m_delegates;
+};
+
 
 #endif // __cplusplus
+
+}
 
 #endif // EVENTHELPER_H

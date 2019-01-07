@@ -21,14 +21,15 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define EVENT_H
 
 
-// Check C++ version >= C++11
-#if (__cplusplus >= 201103L)
-
 #include "IEvent.h"
 #include "IArray.h"
 
 namespace nano_stl
 {
+
+// Check C++ version >= C++11
+#if (__cplusplus >= 201103L)
+
 
 /** \brief Event implementation */
 template<typename... args>
@@ -45,11 +46,13 @@ class Event : public IEvent<args...>
         /** \brief Trigger the event */
         virtual void trigger(args&&... a) const
         {
-            for (nano_stl_size_t i = 0; i < m_delegates.getCount(); i++)
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; i < size; i++)
             {
-                if (m_delegates[i] != NULL)
+                const IDelegate<void, args...>*& delegate = m_delegates[i];
+                if (delegate != NULL)
                 {
-                    m_delegates[i]->invoke(static_cast<args&&>(a)...);
+                    delegate->invoke(static_cast<args&&>(a)...);
                 }
             }
         }
@@ -59,11 +62,13 @@ class Event : public IEvent<args...>
         {
             bool found = false;
 
-            for (nano_stl_size_t i = 0; (i < m_delegates.getCount()) && !found; i++)
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                if (m_delegates[i] == NULL)
+                const IDelegate<void, args...>*& delegate_i = m_delegates[i];
+                if (delegate_i == NULL)
                 {
-                    m_delegates[i] = &delegate;
+                    delegate_i = &delegate;
                     found = true;
                 }
             }
@@ -76,11 +81,13 @@ class Event : public IEvent<args...>
         {
             bool found = false;
 
-            for (nano_stl_size_t i = 0; (i < m_delegates.getCount()) && !found; i++)
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                if (m_delegates[i] == &delegate)
+                const IDelegate<void, args...>*& delegate_i = m_delegates[i];
+                if (delegate_i == &delegate)
                 {
-                    m_delegates[i] = NULL;
+                    delegate_i = NULL;
                     found = true;
                 }
             }
@@ -95,8 +102,156 @@ class Event : public IEvent<args...>
         IArray< const IDelegate<void, args...>* >& m_delegates;
 };
 
-}
+
+#else // __cplusplus
+
+
+/** \brief Event implementation */
+template<typename ArgType>
+class Event : public IEvent<ArgType>
+{
+    public:
+
+        /** \brief Constructor */
+        Event(IArray< const IDelegate<void, ArgType>* >& delegates)
+        : m_delegates(delegates)
+        {}
+
+
+        /** \brief Trigger the event */
+        virtual void trigger(ArgType a) const
+        {
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; i < size; i++)
+            {
+                const IDelegate<void, ArgType>*& delegate = m_delegates[i];
+                if (delegate != NULL)
+                {
+                    delegate->invoke(a);
+                }
+            }
+        }
+
+        /** \brief Bind a delegate to receive event notifications */
+        virtual bool bind(const IDelegate<void, ArgType>& delegate)
+        {
+            bool found = false;
+
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; (i < size) && !found; i++)
+            {
+                const IDelegate<void, ArgType>*& delegate_i = m_delegates[i];
+                if (delegate_i == NULL)
+                {
+                    delegate_i = &delegate;
+                    found = true;
+                }
+            }
+            
+            return found;
+        }
+
+        /** \brief Unbind a delegate from event notifications */
+        virtual bool unbind(const IDelegate<void, ArgType>& delegate)
+        {
+            bool found = false;
+
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; (i < size) && !found; i++)
+            {
+                const IDelegate<void, ArgType>*& delegate_i = m_delegates[i];
+                if (delegate_i == &delegate)
+                {
+                    delegate_i = NULL;
+                    found = true;
+                }
+            }
+            
+            return found;
+        }
+
+
+    private:
+
+        /** \brief Delegates to receive the event */
+        IArray< const IDelegate<void, ArgType>* >& m_delegates;
+};
+
+
+/** \brief Event implementation */
+template<>
+class Event<void> : public IEvent<void>
+{
+    public:
+
+        /** \brief Constructor */
+        Event(IArray< const IDelegate<void, void>* >& delegates)
+        : m_delegates(delegates)
+        {}
+
+
+        /** \brief Trigger the event */
+        virtual void trigger() const
+        {
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; i < size; i++)
+            {
+                const IDelegate<void, void>*& delegate = m_delegates[i];
+                if (delegate != NULL)
+                {
+                    delegate->invoke();
+                }
+            }
+        }
+
+        /** \brief Bind a delegate to receive event notifications */
+        virtual bool bind(const IDelegate<void, void>& delegate)
+        {
+            bool found = false;
+
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; (i < size) && !found; i++)
+            {
+                const IDelegate<void, void>*& delegate_i = m_delegates[i];
+                if (delegate_i == NULL)
+                {
+                    delegate_i = &delegate;
+                    found = true;
+                }
+            }
+            
+            return found;
+        }
+
+        /** \brief Unbind a delegate from event notifications */
+        virtual bool unbind(const IDelegate<void, void>& delegate)
+        {
+            bool found = false;
+
+            const nano_stl_size_t size = m_delegates.getCount();
+            for (nano_stl_size_t i = 0; (i < size) && !found; i++)
+            {
+                const IDelegate<void, void>*& delegate_i = m_delegates[i];
+                if (delegate_i == &delegate)
+                {
+                    delegate_i = NULL;
+                    found = true;
+                }
+            }
+            
+            return found;
+        }
+
+
+    private:
+
+        /** \brief Delegates to receive the event */
+        IArray< const IDelegate<void, void>* >& m_delegates;
+};
+
 
 #endif // __cplusplus
+
+}
 
 #endif // EVENT_H

@@ -21,13 +21,16 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define FDELEGATE_H
 
 
-// Check C++ version >= C++11
-#if (__cplusplus >= 201103L)
-
 #include "IDelegate.h"
 
 namespace nano_stl
 {
+
+
+// Check C++ version >= C++11
+#if (__cplusplus >= 201103L)
+
+
 
 /** \brief Delegate to target a function */
 template<typename ReturnType, typename... args>
@@ -81,14 +84,14 @@ class FDelegate : public IDelegate<ReturnType, args...>
 
 
         /** \brief Comparison operator */
-        bool operator == (FDelegate<ReturnType, args...>& compareDelegate) const
+        bool operator == (const FDelegate<ReturnType, args...>& compareDelegate) const
         {
             const bool ret = (m_function == compareDelegate.m_function);
             return ret;
         }
 
         /** \brief Comparison operator */
-        bool operator != (FDelegate<ReturnType, args...>& compareDelegate) const
+        bool operator != (const FDelegate<ReturnType, args...>& compareDelegate) const
         {
             const bool ret = (m_function != compareDelegate.m_function);
             return ret;
@@ -109,8 +112,174 @@ class FDelegate : public IDelegate<ReturnType, args...>
 
 };
 
-}
+
+#else // __cplusplus
+
+
+/** \brief Delegate to target a function */
+template<typename ReturnType, typename ArgType>
+class FDelegate : public IDelegate<ReturnType, ArgType>
+{
+    public:
+
+        /** \brief Caller method type */
+        typedef ReturnType(*fpCall)(ArgType);
+
+
+        /** \brief Constructor */
+        FDelegate()
+        : m_function(nullptr)
+        {}
+
+        /** \brief Constructor */
+        FDelegate(const fpCall function)
+        : m_function(function)
+        {}
+
+        /** \brief Copy constructor */
+        FDelegate(const FDelegate& copy)
+        : m_function(copy.m_function)
+        {}
+
+   
+        /** \brief Invoke the target function or method */
+        virtual ReturnType invoke(ArgType a) const
+        {
+            return (*m_function)(a);
+        }
+
+        /** \brief Call operator to invoke the target function or method */
+        virtual ReturnType operator()(ArgType a) const
+        {
+            return (*m_function)(a);
+        }
+
+        /** \brief Indicate if the delegate points to a valid target function or method */
+        virtual bool isNull() const
+        {
+            return (m_function == NULL);
+        }
+
+        /** \brief Make the delegate invalid */
+        virtual void reset()
+        {
+            m_function = NULL;
+        }
+
+
+        /** \brief Comparison operator */
+        bool operator == (const FDelegate<ReturnType, ArgType>& compareDelegate) const
+        {
+            const bool ret = (m_function == compareDelegate.m_function);
+            return ret;
+        }
+
+        /** \brief Comparison operator */
+        bool operator != (const FDelegate<ReturnType, ArgType>& compareDelegate) const
+        {
+            const bool ret = (m_function != compareDelegate.m_function);
+            return ret;
+        }
+
+        /** \brief Assignment operator */
+        FDelegate<ReturnType, ArgType>& operator = (const FDelegate<ReturnType, ArgType>& copy)
+        {
+            m_function = copy.m_function;
+            return (*this);
+        }
+
+
+    private:
+
+        /** \brief Function to call */
+        fpCall m_function;
+
+};
+
+
+/** \brief Delegate to target a function */
+template<typename ReturnType>
+class FDelegate<ReturnType, void> : public IDelegate<ReturnType, void>
+{
+    public:
+
+        /** \brief Caller method type */
+        typedef ReturnType(*fpCall)();
+
+
+        /** \brief Constructor */
+        FDelegate()
+        : m_function(nullptr)
+        {}
+
+        /** \brief Constructor */
+        FDelegate(const fpCall function)
+        : m_function(function)
+        {}
+
+        /** \brief Copy constructor */
+        FDelegate(const FDelegate& copy)
+        : m_function(copy.m_function)
+        {}
+
+   
+        /** \brief Invoke the target function or method */
+        virtual ReturnType invoke() const
+        {
+            return (*m_function)();
+        }
+
+        /** \brief Call operator to invoke the target function or method */
+        virtual ReturnType operator()() const
+        {
+            return (*m_function)();
+        }
+
+        /** \brief Indicate if the delegate points to a valid target function or method */
+        virtual bool isNull() const
+        {
+            return (m_function == NULL);
+        }
+
+        /** \brief Make the delegate invalid */
+        virtual void reset()
+        {
+            m_function = NULL;
+        }
+
+
+        /** \brief Comparison operator */
+        bool operator == (const FDelegate<ReturnType, void>& compareDelegate) const
+        {
+            const bool ret = (m_function == compareDelegate.m_function);
+            return ret;
+        }
+
+        /** \brief Comparison operator */
+        bool operator != (const FDelegate<ReturnType, void>& compareDelegate) const
+        {
+            const bool ret = (m_function != compareDelegate.m_function);
+            return ret;
+        }
+
+        /** \brief Assignment operator */
+        FDelegate<ReturnType, void>& operator = (const FDelegate<ReturnType, void>& copy)
+        {
+            m_function = copy.m_function;
+            return (*this);
+        }
+
+
+    private:
+
+        /** \brief Function to call */
+        fpCall m_function;
+
+};
+
 
 #endif // __cplusplus
+
+}
 
 #endif // FDELEGATE_H

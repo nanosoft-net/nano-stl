@@ -21,14 +21,15 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define IEVENT_H
 
 
-// Check C++ version >= C++11
-#if (__cplusplus >= 201103L)
-
 #include "nano-stl-conf.h"
 #include "IDelegate.h"
 
 namespace nano_stl
 {
+
+// Check C++ version >= C++11
+#if (__cplusplus >= 201103L)
+
 
 /** \brief Interface for all events implementations */
 template<typename... args>
@@ -46,8 +47,46 @@ class IEvent
         virtual bool unbind(const IDelegate<void, args...>& delegate) = 0;
 };
 
-}
+
+#else // __cplusplus
+
+
+/** \brief Interface for all events implementations */
+template<typename ArgType>
+class IEvent
+{
+    public:
+
+        /** \brief Trigger the event */
+        virtual void trigger(ArgType a) const = 0;
+
+        /** \brief Bind a delegate to receive event notifications */
+        virtual bool bind(const IDelegate<void, ArgType>& delegate) = 0;
+
+        /** \brief Unbind a delegate from event notifications */
+        virtual bool unbind(const IDelegate<void, ArgType>& delegate) = 0;
+};
+
+
+/** \brief Interface for all events implementations */
+template<>
+class IEvent<void>
+{
+    public:
+
+        /** \brief Trigger the event */
+        virtual void trigger() const = 0;
+
+        /** \brief Bind a delegate to receive event notifications */
+        virtual bool bind(const IDelegate<void, void>& delegate) = 0;
+
+        /** \brief Unbind a delegate from event notifications */
+        virtual bool unbind(const IDelegate<void, void>& delegate) = 0;
+};
+
 
 #endif // __cplusplus
+
+}
 
 #endif // IEVENT_H
