@@ -17,37 +17,45 @@ You should have received a copy of the GNU Lesser General Public License
 along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IEVENT_H
-#define IEVENT_H
+#ifndef EVENTHELPER_H
+#define EVENTHELPER_H
 
 
 // Check C++ version >= C++11
 #if (__cplusplus >= 201103L)
 
-#include "nano-stl-conf.h"
-#include "IDelegate.h"
+#include "Event.h"
+#include "StaticArray.h"
 
 namespace nano_stl
 {
 
-/** \brief Interface for all events implementations */
-template<typename... args>
-class IEvent
+/** \brief Helper for event instanciation */
+template<uint32_t MAX_DELEGATE_COUNT, typename... args>
+class EventHelper : public Event<args...>
 {
     public:
 
-        /** \brief Trigger the event */
-        virtual void trigger(args&&... a) const = 0;
+        /** \brief Constructor */
+        EventHelper()
+        : Event<args...>(m_delegates)
+        , m_delegates()
+        {
+            for (nano_stl_size_t i = 0; i < m_delegates.getCount(); i++)
+            {
+                m_delegates[i] = NULL;
+            }
+        }
 
-        /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, args...>& delegate) = 0;
 
-        /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, args...>& delegate) = 0;
+    private:
+
+        /** \brief Delegates to receive the event */
+        StaticArray< const IDelegate<void, args...>*, MAX_DELEGATE_COUNT > m_delegates;
 };
 
 }
 
 #endif // __cplusplus
 
-#endif // IEVENT_H
+#endif // EVENTHELPER_H

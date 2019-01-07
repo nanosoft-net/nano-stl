@@ -25,6 +25,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #if (__cplusplus >= 201103L)
 
 #include "IEvent.h"
+#include "IArray.h"
 
 namespace nano_stl
 {
@@ -35,24 +36,63 @@ class Event : public IEvent<args...>
 {
     public:
 
+        /** \brief Constructor */
+        Event(IArray< const IDelegate<void, args...>* >& delegates)
+        : m_delegates(delegates)
+        {}
+
+
         /** \brief Trigger the event */
         virtual void trigger(args&&... a) const
         {
-            m_delegate.invoke(static_cast<args&&>(a)...);
+            for (nano_stl_size_t i = 0; i < m_delegates.getCount(); i++)
+            {
+                if (m_delegates[i] != NULL)
+                {
+                    m_delegates[i]->invoke(static_cast<args&&>(a)...);
+                }
+            }
         }
 
         /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const Delegate<void, args...>& delegate)
+        virtual bool bind(const IDelegate<void, args...>& delegate)
         {
-            m_delegate = delegate;
-            return true;
+            bool found = false;
+
+            for (nano_stl_size_t i = 0; (i < m_delegates.getCount()) && !found; i++)
+            {
+                if (m_delegates[i] == NULL)
+                {
+                    m_delegates[i] = &delegate;
+                    found = true;
+                }
+            }
+            
+            return found;
+        }
+
+        /** \brief Unbind a delegate from event notifications */
+        virtual bool unbind(const IDelegate<void, args...>& delegate)
+        {
+            bool found = false;
+
+            for (nano_stl_size_t i = 0; (i < m_delegates.getCount()) && !found; i++)
+            {
+                if (m_delegates[i] == &delegate)
+                {
+                    m_delegates[i] = NULL;
+                    found = true;
+                }
+            }
+            
+            return found;
         }
 
 
     private:
 
-        /** \brief Delegate */
-        Delegate<void, args...> m_delegate;
+        /** \brief Delegates to receive the event */
+        IArray< const IDelegate<void, args...>* >& m_delegates;
 };
 
 }
