@@ -50,6 +50,15 @@ typedef uint32_t nano_stl_size_t;
 //////////////////////////////// Options /////////////////////////////////
 
 
+/* Error handler options */
+
+/** \brief Maximum number of listeners to the critical error event */
+#define NANO_STL_MAX_ERROR_HANDLER_LISTENERS            2
+
+
+
+
+
 /* Containers configuration options */
 
 /** \brief Enable the use of iterators (increase code size) */
@@ -75,6 +84,7 @@ typedef uint32_t nano_stl_size_t;
  *         NANO_STL_DYNAMIC_MEMORY_ALLOCATION_STANDARD
  */
 #define NANO_STL_DYNAMIC_MEMORY_ALLOCATION      NANO_STL_DYNAMIC_MEMORY_ALLOCATION_DISABLED
+
 
 
 
