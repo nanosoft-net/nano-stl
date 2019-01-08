@@ -21,9 +21,8 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define STRINGBASE_H
 
 #include "IString.h"
+#include "IErrorHandler.h"
 
-#include <string.h>
-#include <stdio.h>
 
 namespace nano_stl
 {
@@ -184,12 +183,26 @@ class StringBase : public IString
         /** \brief Get an item at a specified index */
         virtual char& operator [] (const nano_stl_size_t index) override
         {
+            #if (NANO_STL_ITEM_ACCESS_CHECK_ENABLE == 1)
+            if (index >= m_length)
+            {
+                NANO_STL_CRITICAL_ERROR();
+            }
+            #endif // NANO_STL_ITEM_ACCESS_CHECK_ENABLE
+
             return m_c_str[index];
         }
 
         /** \brief Get an item at a specified index */
         virtual const char& operator [] (const nano_stl_size_t index) const override
         {
+            #if (NANO_STL_ITEM_ACCESS_CHECK_ENABLE == 1)
+            if (index >= m_length)
+            {
+                NANO_STL_CRITICAL_ERROR();
+            }
+            #endif // NANO_STL_ITEM_ACCESS_CHECK_ENABLE
+
             return m_c_str[index];
         }
 

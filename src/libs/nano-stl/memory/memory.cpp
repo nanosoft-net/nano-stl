@@ -18,6 +18,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "nano-stl-conf.h"
+#include "IErrorHandler.h"
 
 #include <new>
 
@@ -28,22 +29,24 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 void* operator new (std::size_t size)
 {
+    NANO_STL_CRITICAL_ERROR();
     return nullptr;
 }
 
 void operator delete (void* ptr)
 {
-    
+    NANO_STL_CRITICAL_ERROR();
 }
 
 void* operator new[] (std::size_t size)
 {
+    NANO_STL_CRITICAL_ERROR();
     return nullptr;
 }
 
 void operator delete[] (void* ptr)
 {
-    
+    NANO_STL_CRITICAL_ERROR();
 }
 
 

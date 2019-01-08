@@ -45,7 +45,7 @@ class EventHelper : public Event<args...>
             const nano_stl_size_t size = m_delegates.getCount();
             for (nano_stl_size_t i = 0; i < size; i++)
             {
-                m_delegates[i] = NULL;
+                m_delegates[i] = nullptr;
             }
         }
 
@@ -74,7 +74,7 @@ class EventHelper : public Event<ArgType>
             const nano_stl_size_t size = m_delegates.getCount();
             for (nano_stl_size_t i = 0; i < size; i++)
             {
-                m_delegates[i] = NULL;
+                m_delegates[i] = nullptr;
             }
         }
 

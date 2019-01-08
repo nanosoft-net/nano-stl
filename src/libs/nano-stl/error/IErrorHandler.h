@@ -17,30 +17,29 @@ You should have received a copy of the GNU Lesser General Public License
 along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ERRORHANDLER_H
-#define ERRORHANDLER_H
+#ifndef IERRORHANDLER_H
+#define IERRORHANDLER_H
+
+#include "IEvent.h"
 
 
-#include "IErrorHandler.h"
-#include "EventHelper.h"
+/** \brief Macro to trigger a critical error */
+#define NANO_STL_CRITICAL_ERROR()  nano_stl::IErrorHandler::getInstance().criticalError()
+
 
 
 namespace nano_stl
 {
 
 
-/** \brief Error handler */
-class ErrorHandler : public IErrorHandler
+/** \brief Interface for all error handlers implementations */
+class IErrorHandler
 {
     public:
 
 
-        /** \brief Constructor */
-        ErrorHandler();
-
-
         /** \brief Notify a critical error */
-        virtual void criticalError() override;
+        virtual void criticalError() = 0;
 
 
 
@@ -48,43 +47,21 @@ class ErrorHandler : public IErrorHandler
         #if (__cplusplus >= 201103L)
 
         /** \brief Critical error event */
-        virtual IEvent<>& criticalErrorEvent() override { return m_critial_error_event; }
+        virtual IEvent<>& criticalErrorEvent() = 0;
 
         #else // __cplusplus
 
         /** \brief Critical error event */
-        virtual IEvent<void>& criticalErrorEvent() override { return m_critial_error_event; }
+        virtual IEvent<void>& criticalErrorEvent() = 0;
 
         #endif // __cplusplus
 
 
         /** \brief Get the unique instance */
-        static ErrorHandler& getInstance() { return m_singleton; }
-
-
-    private:
-
-
-
-        // Check C++ version >= C++11
-        #if (__cplusplus >= 201103L)
-
-        /** \brief Critical error event */
-        EventHelper<NANO_STL_MAX_ERROR_HANDLER_LISTENERS> m_critial_error_event;
-
-        #else // __cplusplus
-
-        /** \brief Critical error event */
-        EventHelper<NANO_STL_MAX_ERROR_HANDLER_LISTENERS, void> m_critial_error_event;
-
-        #endif // __cplusplus
-
-
-        /** \brief Unique instance */
-        static ErrorHandler m_singleton;
+        static IErrorHandler& getInstance();
 
 };
 
 }
 
-#endif // ERRORHANDLER_H
+#endif // IERRORHANDLER_H

@@ -64,6 +64,9 @@ typedef uint32_t nano_stl_size_t;
 /** \brief Enable the use of iterators (increase code size) */
 #define NANO_STL_ITERATORS_ENABLED                      1
 
+/** \brief Enable item access checking (prevent segfault when wrongly access container item but increase code size and decrease performances) */
+#define NANO_STL_ITEM_ACCESS_CHECK_ENABLE               1
+
 
 
 

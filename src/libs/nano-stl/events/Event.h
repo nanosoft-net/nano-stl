@@ -50,7 +50,7 @@ class Event : public IEvent<args...>
             for (nano_stl_size_t i = 0; i < size; i++)
             {
                 const IDelegate<void, args...>*& delegate = m_delegates[i];
-                if (delegate != NULL)
+                if (delegate != nullptr)
                 {
                     delegate->invoke(static_cast<args&&>(a)...);
                 }
@@ -66,7 +66,7 @@ class Event : public IEvent<args...>
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
                 const IDelegate<void, args...>*& delegate_i = m_delegates[i];
-                if (delegate_i == NULL)
+                if (delegate_i == nullptr)
                 {
                     delegate_i = &delegate;
                     found = true;
@@ -87,7 +87,7 @@ class Event : public IEvent<args...>
                 const IDelegate<void, args...>*& delegate_i = m_delegates[i];
                 if (delegate_i == &delegate)
                 {
-                    delegate_i = NULL;
+                    delegate_i = nullptr;
                     found = true;
                 }
             }
@@ -125,7 +125,7 @@ class Event : public IEvent<ArgType>
             for (nano_stl_size_t i = 0; i < size; i++)
             {
                 const IDelegate<void, ArgType>*& delegate = m_delegates[i];
-                if (delegate != NULL)
+                if (delegate != nullptr)
                 {
                     delegate->invoke(a);
                 }
@@ -141,7 +141,7 @@ class Event : public IEvent<ArgType>
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
                 const IDelegate<void, ArgType>*& delegate_i = m_delegates[i];
-                if (delegate_i == NULL)
+                if (delegate_i == nullptr)
                 {
                     delegate_i = &delegate;
                     found = true;
@@ -162,7 +162,7 @@ class Event : public IEvent<ArgType>
                 const IDelegate<void, ArgType>*& delegate_i = m_delegates[i];
                 if (delegate_i == &delegate)
                 {
-                    delegate_i = NULL;
+                    delegate_i = nullptr;
                     found = true;
                 }
             }
@@ -197,7 +197,7 @@ class Event<void> : public IEvent<void>
             for (nano_stl_size_t i = 0; i < size; i++)
             {
                 const IDelegate<void, void>*& delegate = m_delegates[i];
-                if (delegate != NULL)
+                if (delegate != nullptr)
                 {
                     delegate->invoke();
                 }
@@ -213,7 +213,7 @@ class Event<void> : public IEvent<void>
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
                 const IDelegate<void, void>*& delegate_i = m_delegates[i];
-                if (delegate_i == NULL)
+                if (delegate_i == nullptr)
                 {
                     delegate_i = &delegate;
                     found = true;
@@ -234,7 +234,7 @@ class Event<void> : public IEvent<void>
                 const IDelegate<void, void>*& delegate_i = m_delegates[i];
                 if (delegate_i == &delegate)
                 {
-                    delegate_i = NULL;
+                    delegate_i = nullptr;
                     found = true;
                 }
             }

@@ -73,13 +73,13 @@ class FDelegate : public IDelegate<ReturnType, args...>
         /** \brief Indicate if the delegate points to a valid target function or method */
         virtual bool isNull() const override
         {
-            return (m_function == NULL);
+            return (m_function == nullptr);
         }
 
         /** \brief Make the delegate invalid */
         virtual void reset() override
         {
-            m_function = NULL;
+            m_function = nullptr;
         }
 
 
@@ -157,13 +157,13 @@ class FDelegate : public IDelegate<ReturnType, ArgType>
         /** \brief Indicate if the delegate points to a valid target function or method */
         virtual bool isNull() const
         {
-            return (m_function == NULL);
+            return (m_function == nullptr);
         }
 
         /** \brief Make the delegate invalid */
         virtual void reset()
         {
-            m_function = NULL;
+            m_function = nullptr;
         }
 
 
@@ -238,13 +238,13 @@ class FDelegate<ReturnType, void> : public IDelegate<ReturnType, void>
         /** \brief Indicate if the delegate points to a valid target function or method */
         virtual bool isNull() const
         {
-            return (m_function == NULL);
+            return (m_function == nullptr);
         }
 
         /** \brief Make the delegate invalid */
         virtual void reset()
         {
-            m_function = NULL;
+            m_function = nullptr;
         }
 
 

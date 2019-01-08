@@ -21,6 +21,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define ARRAYBASE_H
 
 #include "IArray.h"
+#include "IErrorHandler.h"
 
 namespace nano_stl
 {
@@ -110,12 +111,26 @@ class ArrayBase : public IArray<ItemType>
         /** \brief Get an item at a specified index */
         virtual ItemType& operator [] (const nano_stl_size_t index) override
         {
+            #if (NANO_STL_ITEM_ACCESS_CHECK_ENABLE == 1)
+            if (index >= m_size)
+            {
+                NANO_STL_CRITICAL_ERROR();
+            }
+            #endif // NANO_STL_ITEM_ACCESS_CHECK_ENABLE
+
             return m_items[index];
         }
 
         /** \brief Get an item at a specified index */
         virtual const ItemType& operator [] (const nano_stl_size_t index) const override
         {
+            #if (NANO_STL_ITEM_ACCESS_CHECK_ENABLE == 1)
+            if (index >= m_size)
+            {
+                NANO_STL_CRITICAL_ERROR();
+            }
+            #endif // NANO_STL_ITEM_ACCESS_CHECK_ENABLE
+
             return m_items[index];
         }
 

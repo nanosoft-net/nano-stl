@@ -52,4 +52,10 @@ void ErrorHandler::criticalError()
     {}
 }
 
+/** \brief Get the unique instance */
+IErrorHandler& IErrorHandler::getInstance()
+{
+    return ErrorHandler::getInstance();
+}
+
 }

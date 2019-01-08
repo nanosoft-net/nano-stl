@@ -21,6 +21,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define ZEROSIZEARRAY_H
 
 #include "IArray.h"
+#include "IErrorHandler.h"
 
 namespace nano_stl
 {
@@ -95,12 +96,14 @@ class ZeroSizeArray : public IArray<ItemType>
         /** \brief Get an item at a specified index */
         virtual ItemType& operator [] (const nano_stl_size_t index) override
         {
+            NANO_STL_CRITICAL_ERROR();
             return (*reinterpret_cast<ItemType*>(nullptr));
         }
 
         /** \brief Get an item at a specified index */
         virtual const ItemType& operator [] (const nano_stl_size_t index) const override
         {
+            NANO_STL_CRITICAL_ERROR();
             return (*reinterpret_cast<ItemType*>(nullptr));
         }
 

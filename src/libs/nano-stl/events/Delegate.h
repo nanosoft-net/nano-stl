@@ -38,7 +38,7 @@ class Delegate : public IDelegate<ReturnType, args...>
 
         /** \brief Constructor */
         Delegate()
-        : m_obj(NULL)
+        : m_obj(nullptr)
         , m_method(nullptr)
         {}
 
@@ -71,14 +71,14 @@ class Delegate : public IDelegate<ReturnType, args...>
         /** \brief Indicate if the delegate points to a valid target function or method */
         virtual bool isNull() const override
         {
-            return ((m_obj == NULL) || (m_method == NULL));
+            return ((m_obj == nullptr) || (m_method == nullptr));
         }
 
         /** \brief Make the delegate invalid */
         virtual void reset() override
         {
-            m_obj = NULL;
-            m_method = NULL;
+            m_obj = nullptr;
+            m_method = nullptr;
         }
 
 
@@ -144,7 +144,7 @@ class Delegate : public IDelegate<ReturnType, ArgType>
 
         /** \brief Constructor */
         Delegate()
-        : m_obj(NULL)
+        : m_obj(nullptr)
         , m_method(nullptr)
         {}
 
@@ -177,14 +177,14 @@ class Delegate : public IDelegate<ReturnType, ArgType>
         /** \brief Indicate if the delegate points to a valid target function or method */
         virtual bool isNull() const
         {
-            return ((m_obj == NULL) || (m_method == NULL));
+            return ((m_obj == nullptr) || (m_method == nullptr));
         }
 
         /** \brief Make the delegate invalid */
         virtual void reset()
         {
-            m_obj = NULL;
-            m_method = NULL;
+            m_obj = nullptr;
+            m_method = nullptr;
         }
 
 
@@ -247,7 +247,7 @@ class Delegate<ReturnType, void> : public IDelegate<ReturnType, void>
 
         /** \brief Constructor */
         Delegate()
-        : m_obj(NULL)
+        : m_obj(nullptr)
         , m_method(nullptr)
         {}
 
@@ -280,14 +280,14 @@ class Delegate<ReturnType, void> : public IDelegate<ReturnType, void>
         /** \brief Indicate if the delegate points to a valid target function or method */
         virtual bool isNull() const
         {
-            return ((m_obj == NULL) || (m_method == NULL));
+            return ((m_obj == nullptr) || (m_method == nullptr));
         }
 
         /** \brief Make the delegate invalid */
         virtual void reset()
         {
-            m_obj = NULL;
-            m_method = NULL;
+            m_obj = nullptr;
+            m_method = nullptr;
         }
 
 

@@ -21,6 +21,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define BSTREEBASE_H
 
 #include "IBSTree.h"
+#include "IErrorHandler.h"
 
 namespace nano_stl
 {
@@ -97,6 +98,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             }
             else
             {
+                NANO_STL_CRITICAL_ERROR();
                 return (*reinterpret_cast<ItemType*>(nullptr));
             }
         }
@@ -113,6 +115,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             }
             else
             {
+                NANO_STL_CRITICAL_ERROR();
                 return (*reinterpret_cast<const ItemType*>(nullptr));
             }
         }
