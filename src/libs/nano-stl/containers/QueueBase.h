@@ -47,13 +47,13 @@ class QueueBase : public IQueue<ItemType>
 
 
         /** \brief Get the number of objects that the container can handle */
-        virtual nano_stl_size_t getCapacity() const { return m_size; }
+        virtual nano_stl_size_t getCapacity() const override { return m_size; }
 
         /** \brief Get the number of objects that the container contains */
-        virtual nano_stl_size_t getCount() const { return m_count; }
+        virtual nano_stl_size_t getCount() const override { return m_count; }
 
         /** \brief Check if the container contains an item */
-        virtual bool contains(const ItemType& item) const
+        virtual bool contains(const ItemType& item) const override
         {
             bool found = false;
 
@@ -82,7 +82,7 @@ class QueueBase : public IQueue<ItemType>
 
 
         /** \brief Add an item to the queue */
-        virtual bool push(const ItemType& item)
+        virtual bool push(const ItemType& item) override
         {
             bool ret = false;
 
@@ -103,7 +103,7 @@ class QueueBase : public IQueue<ItemType>
         }
 
         /** \brief Remove the oldest item from the queue */
-        virtual bool pop(ItemType& item)
+        virtual bool pop(ItemType& item) override
         {
             bool ret = false;
 

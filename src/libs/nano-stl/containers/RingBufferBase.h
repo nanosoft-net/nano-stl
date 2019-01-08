@@ -47,13 +47,13 @@ class RingBufferBase : public IRingBuffer<ItemType>
 
 
         /** \brief Get the number of objects that the container can handle */
-        virtual nano_stl_size_t getCapacity() const { return m_size; }
+        virtual nano_stl_size_t getCapacity() const override { return m_size; }
 
         /** \brief Get the number of objects that the container contains */
-        virtual nano_stl_size_t getCount() const { return m_count; }
+        virtual nano_stl_size_t getCount() const override { return m_count; }
 
         /** \brief Check if the container contains an item */
-        virtual bool contains(const ItemType& item) const
+        virtual bool contains(const ItemType& item) const override
         {
             bool found = false;
 
@@ -82,7 +82,7 @@ class RingBufferBase : public IRingBuffer<ItemType>
 
 
         /** \brief Write an item into the ring buffer */
-        virtual bool write(const ItemType& item)
+        virtual bool write(const ItemType& item) override
         {
             (*m_write) = item;
             m_write++;
@@ -107,7 +107,7 @@ class RingBufferBase : public IRingBuffer<ItemType>
         }
 
         /** \brief Read an item from the ring buffer */
-        virtual bool read(ItemType& item)
+        virtual bool read(ItemType& item) override
         {
             bool ret = false;
 
@@ -128,7 +128,7 @@ class RingBufferBase : public IRingBuffer<ItemType>
         }
 
         /** \brief Remove all the items from the ring buffer */
-        virtual void clear()
+        virtual void clear() override
         {
             m_count = 0u;
             m_read = &m_items[0u];

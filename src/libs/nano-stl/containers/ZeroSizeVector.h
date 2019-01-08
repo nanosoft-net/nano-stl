@@ -53,13 +53,13 @@ class ZeroSizeVector : public IVector<ItemType>
 
 
         /** \brief Get the number of objects that the container can handle */
-        virtual nano_stl_size_t getCapacity() const { return 0u; }
+        virtual nano_stl_size_t getCapacity() const override { return 0u; }
 
         /** \brief Get the number of objects that the container contains */
-        virtual nano_stl_size_t getCount() const { return 0u; }
+        virtual nano_stl_size_t getCount() const override { return 0u; }
 
         /** \brief Check if the container contains an item */
-        virtual bool contains(const ItemType& item) const { return false; }
+        virtual bool contains(const ItemType& item) const override { return false; }
 
 
 // Check if iterators are enabled
@@ -69,22 +69,22 @@ class ZeroSizeVector : public IVector<ItemType>
 
         
         /** \brief Get the iterator which points to the start of the container */
-        virtual const IIterator<ItemType>& begin() const { return m_begin; }
+        virtual const IIterator<ItemType>& begin() const override { return m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        virtual const IIterator<ItemType>& end() const { return m_end; }
+        virtual const IIterator<ItemType>& end() const override { return m_end; }
 
         /** \brief Get the iterator of the container */
-        virtual IIterator<ItemType>& it() { return m_it; }
+        virtual IIterator<ItemType>& it() override { return m_it; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        virtual const IConstIterator<ItemType>& cbegin() const { return m_const_begin; }
+        virtual const IConstIterator<ItemType>& cbegin() const override { return m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        virtual const IConstIterator<ItemType>& cend() const { return m_const_end; }
+        virtual const IConstIterator<ItemType>& cend() const override { return m_const_end; }
 
         /** \brief Get the const iterator of the container */
-        virtual IConstIterator<ItemType>& const_it() const { return (*m_pconst_it); }
+        virtual IConstIterator<ItemType>& const_it() const override { return (*m_pconst_it); }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 
@@ -93,13 +93,13 @@ class ZeroSizeVector : public IVector<ItemType>
 
 
         /** \brief Get an item at a specified index */
-        virtual ItemType& operator [] (const nano_stl_size_t index)
+        virtual ItemType& operator [] (const nano_stl_size_t index) override
         {
             return (*reinterpret_cast<ItemType*>(nullptr));
         }
 
         /** \brief Get an item at a specified index */
-        virtual const ItemType& operator [] (const nano_stl_size_t index) const
+        virtual const ItemType& operator [] (const nano_stl_size_t index) const override
         {
             return (*reinterpret_cast<ItemType*>(nullptr));
         }
@@ -109,13 +109,13 @@ class ZeroSizeVector : public IVector<ItemType>
 
 
         /** \brief Add an item at the end of the vector */
-        virtual bool pushBack(const ItemType& item) { (void)item; return false; }
+        virtual bool pushBack(const ItemType& item) override { (void)item; return false; }
 
         /** \brief Remove the item at the end of the vector */
-        virtual bool popBack(ItemType& item) { (void)item; return false; }
+        virtual bool popBack(ItemType& item) override { (void)item; return false; }
 
         /** \brief Remove all the items from the vector */
-        virtual void clear() {}
+        virtual void clear() override {}
 
 
     private:

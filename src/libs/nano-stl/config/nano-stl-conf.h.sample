@@ -30,6 +30,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #define NULL 0
 #endif // NULL
 #define nullptr NULL
+#define override
 
 #else // __cplusplus
 #include <cstdint>

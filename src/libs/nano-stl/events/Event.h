@@ -44,7 +44,7 @@ class Event : public IEvent<args...>
 
 
         /** \brief Trigger the event */
-        virtual void trigger(args&&... a) const
+        virtual void trigger(args&&... a) const override
         {
             const nano_stl_size_t size = m_delegates.getCount();
             for (nano_stl_size_t i = 0; i < size; i++)
@@ -58,7 +58,7 @@ class Event : public IEvent<args...>
         }
 
         /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, args...>& delegate)
+        virtual bool bind(const IDelegate<void, args...>& delegate) override
         {
             bool found = false;
 
@@ -77,7 +77,7 @@ class Event : public IEvent<args...>
         }
 
         /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, args...>& delegate)
+        virtual bool unbind(const IDelegate<void, args...>& delegate) override
         {
             bool found = false;
 

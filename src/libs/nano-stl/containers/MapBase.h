@@ -57,13 +57,13 @@ class MapBase : public IMap<KeyType, ItemType>
 
 
         /** \brief Get the number of objects that the container can handle */
-        virtual nano_stl_size_t getCapacity() const { return m_bstree.getCapacity(); }
+        virtual nano_stl_size_t getCapacity() const override { return m_bstree.getCapacity(); }
 
         /** \brief Get the number of objects that the container contains */
-        virtual nano_stl_size_t getCount() const { return m_bstree.getCount(); }
+        virtual nano_stl_size_t getCount() const override { return m_bstree.getCount(); }
 
         /** \brief Check if the container contains an item */
-        virtual bool contains(const ItemType& item) const 
+        virtual bool contains(const ItemType& item) const override
         {
             typename IMap<KeyType, ItemType>::Node node;
             node.pitem = &item;
@@ -79,22 +79,22 @@ class MapBase : public IMap<KeyType, ItemType>
 
 
         /** \brief Get the iterator which points to the start of the container */
-        virtual const IIterator<ItemType>& begin() const { return m_begin; }
+        virtual const IIterator<ItemType>& begin() const override { return m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        virtual const IIterator<ItemType>& end() const { return m_end; }
+        virtual const IIterator<ItemType>& end() const override { return m_end; }
 
         /** \brief Get the iterator of the container */
-        virtual IIterator<ItemType>& it() { begin(m_it); return m_it; }
+        virtual IIterator<ItemType>& it() override { begin(m_it); return m_it; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        virtual const IConstIterator<ItemType>& cbegin() const { return m_const_begin; }
+        virtual const IConstIterator<ItemType>& cbegin() const override { return m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        virtual const IConstIterator<ItemType>& cend() const { return m_const_end; }
+        virtual const IConstIterator<ItemType>& cend() const override { return m_const_end; }
 
         /** \brief Get the const iterator of the container */
-        virtual IConstIterator<ItemType>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
+        virtual IConstIterator<ItemType>& const_it() const override { cbegin(*m_pconst_it); return (*m_pconst_it); }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 
@@ -103,13 +103,13 @@ class MapBase : public IMap<KeyType, ItemType>
         
 
         /** \brief Get the item corresponding to a key */
-        virtual ItemType& operator [] (const KeyType& key) { return m_bstree[key].item; }
+        virtual ItemType& operator [] (const KeyType& key) override { return m_bstree[key].item; }
 
         /** \brief Get the item corresponding to a key */
-        virtual const ItemType& operator [] (const KeyType& key) const { return m_bstree[key].item; }
+        virtual const ItemType& operator [] (const KeyType& key) const override { return m_bstree[key].item; }
 
         /** \brief Add an item to the map */
-        virtual bool add(const KeyType& key, const ItemType& item) 
+        virtual bool add(const KeyType& key, const ItemType& item) override
         {
             typename IMap<KeyType, ItemType>::Node node;
             node.pitem = &item;
@@ -135,10 +135,10 @@ class MapBase : public IMap<KeyType, ItemType>
         }
 
         /** \brief Check if the map contains a specific key */
-        virtual bool containsKey(const KeyType& key) const { return m_bstree.containsKey(key); }
+        virtual bool containsKey(const KeyType& key) const override { return m_bstree.containsKey(key); }
 
         /** \brief Get an item from the map */
-        virtual bool get(const KeyType& key, ItemType& item) const 
+        virtual bool get(const KeyType& key, ItemType& item) const override
         { 
             typename IMap<KeyType, ItemType>::Node node;
             node.pitem = &item;
@@ -153,7 +153,7 @@ class MapBase : public IMap<KeyType, ItemType>
         }
 
         /** \brief Remove an item from the map */
-        virtual bool remove(const KeyType& key) 
+        virtual bool remove(const KeyType& key) override
         { 
             const bool ret = m_bstree.remove(key); 
             if (ret)
@@ -181,7 +181,7 @@ class MapBase : public IMap<KeyType, ItemType>
         }
 
         /** \brief Remove all the items from the map */
-        virtual void clear()
+        virtual void clear() override
         {
             m_bstree.clear();
             setFirst(nullptr);
@@ -191,10 +191,10 @@ class MapBase : public IMap<KeyType, ItemType>
     protected:
 
         /** \brief Get the first item of the map */
-        virtual typename IMap<KeyType, ItemType>::Node* getFirst() const { return m_first; }
+        virtual typename IMap<KeyType, ItemType>::Node* getFirst() const override { return m_first; }
 
         /** \brief Get the last item of the map */
-        virtual typename IMap<KeyType, ItemType>::Node* getLast() const { return m_last; }
+        virtual typename IMap<KeyType, ItemType>::Node* getLast() const override { return m_last; }
 
     public:
 
@@ -206,16 +206,16 @@ class MapBase : public IMap<KeyType, ItemType>
 #if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the iterator which points to the start of the container */
-        const void begin(typename IMap<KeyType, ItemType>::Iterator& it) const { it = m_begin; }
+        const void begin(typename IMap<KeyType, ItemType>::Iterator& it) const override { it = m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        const void end(typename IMap<KeyType, ItemType>::Iterator& it) const { it = m_end; }
+        const void end(typename IMap<KeyType, ItemType>::Iterator& it) const override { it = m_end; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        const void cbegin(typename IMap<KeyType, ItemType>::ConstIterator& it) const { it = m_const_begin; }
+        const void cbegin(typename IMap<KeyType, ItemType>::ConstIterator& it) const override { it = m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        const void cend(typename IMap<KeyType, ItemType>::ConstIterator& it) const { it = m_const_end; }
+        const void cend(typename IMap<KeyType, ItemType>::ConstIterator& it) const override { it = m_const_end; }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 

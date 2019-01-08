@@ -56,13 +56,13 @@ class VectorBase : public IVector<ItemType>
 
 
         /** \brief Get the number of objects that the container can handle */
-        virtual nano_stl_size_t getCapacity() const { return m_size; }
+        virtual nano_stl_size_t getCapacity() const override { return m_size; }
 
         /** \brief Get the number of objects that the container contains */
-        virtual nano_stl_size_t getCount() const { return m_count; }
+        virtual nano_stl_size_t getCount() const override { return m_count; }
 
         /** \brief Check if the container contains an item */
-        virtual bool contains(const ItemType& item) const
+        virtual bool contains(const ItemType& item) const override
         {
             bool found = false;
 
@@ -82,22 +82,22 @@ class VectorBase : public IVector<ItemType>
 #if (NANO_STL_ITERATORS_ENABLED == 1)
 
        /** \brief Get the iterator which points to the start of the container */
-        virtual const IIterator<ItemType>& begin() const { return m_begin; }
+        virtual const IIterator<ItemType>& begin() const override { return m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        virtual const IIterator<ItemType>& end() const { return m_end; }
+        virtual const IIterator<ItemType>& end() const override { return m_end; }
 
         /** \brief Get the iterator of the container */
-        virtual IIterator<ItemType>& it() { begin(m_it); return m_it; }
+        virtual IIterator<ItemType>& it() override { begin(m_it); return m_it; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        virtual const IConstIterator<ItemType>& cbegin() const { return m_const_begin; }
+        virtual const IConstIterator<ItemType>& cbegin() const override { return m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        virtual const IConstIterator<ItemType>& cend() const { return m_const_end; }
+        virtual const IConstIterator<ItemType>& cend() const override { return m_const_end; }
 
         /** \brief Get the const iterator of the container */
-        virtual IConstIterator<ItemType>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
+        virtual IConstIterator<ItemType>& const_it() const override { cbegin(*m_pconst_it); return (*m_pconst_it); }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 
@@ -106,13 +106,13 @@ class VectorBase : public IVector<ItemType>
 
 
         /** \brief Get an item at a specified index */
-        virtual ItemType& operator [] (const nano_stl_size_t index)
+        virtual ItemType& operator [] (const nano_stl_size_t index) override
         {
             return m_items[index];
         }
 
         /** \brief Get an item at a specified index */
-        virtual const ItemType& operator [] (const nano_stl_size_t index) const
+        virtual const ItemType& operator [] (const nano_stl_size_t index) const override
         {
             return m_items[index];
         }
@@ -122,7 +122,7 @@ class VectorBase : public IVector<ItemType>
 
 
         /** \brief Add an item at the end of the vector */
-        virtual bool pushBack(const ItemType& item)
+        virtual bool pushBack(const ItemType& item) override
         {
             bool ret = false;
 
@@ -150,7 +150,7 @@ class VectorBase : public IVector<ItemType>
         }
 
         /** \brief Remove the item at the end of the vector */
-        virtual bool popBack(ItemType& item)
+        virtual bool popBack(ItemType& item) override
         {
             bool ret = false;
 
@@ -178,7 +178,7 @@ class VectorBase : public IVector<ItemType>
         }
 
         /** \brief Remove all the items from the vector */
-        virtual void clear()
+        virtual void clear() override
         {
             // Update count
             m_count = 0u;
@@ -201,16 +201,16 @@ class VectorBase : public IVector<ItemType>
 #if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the iterator which points to the start of the container */
-        const void begin(typename IArray<ItemType>::Iterator& it) const { it = m_begin; }
+        const void begin(typename IArray<ItemType>::Iterator& it) const override { it = m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        const void end(typename IArray<ItemType>::Iterator& it) const { it = m_end; }
+        const void end(typename IArray<ItemType>::Iterator& it) const override { it = m_end; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        const void cbegin(typename IArray<ItemType>::ConstIterator& it) const { it = m_const_begin; }
+        const void cbegin(typename IArray<ItemType>::ConstIterator& it) const override { it = m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        const void cend(typename IArray<ItemType>::ConstIterator& it) const { it = m_const_end; }
+        const void cend(typename IArray<ItemType>::ConstIterator& it) const override { it = m_const_end; }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 

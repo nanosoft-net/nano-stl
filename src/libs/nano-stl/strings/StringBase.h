@@ -129,13 +129,13 @@ class StringBase : public IString
 
 
         /** \brief Get the number of objects that the container can handle */
-        virtual nano_stl_size_t getCapacity() const { return m_size; }
+        virtual nano_stl_size_t getCapacity() const override { return m_size; }
 
         /** \brief Get the number of objects that the container contains */
-        virtual nano_stl_size_t getCount() const { return m_length; }
+        virtual nano_stl_size_t getCount() const override { return m_length; }
 
         /** \brief Check if the container contains an item */
-        virtual bool contains(const char& item) const
+        virtual bool contains(const char& item) const override
         {
             bool found = false;
 
@@ -158,22 +158,22 @@ class StringBase : public IString
 
         
         /** \brief Get the iterator which points to the start of the container */
-        virtual const IIterator<char>& begin() const { return m_begin; }
+        virtual const IIterator<char>& begin() const override { return m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        virtual const IIterator<char>& end() const { return m_end; }
+        virtual const IIterator<char>& end() const override { return m_end; }
 
         /** \brief Get the iterator of the container */
-        virtual IIterator<char>& it() { begin(m_it); return m_it; }
+        virtual IIterator<char>& it() override { begin(m_it); return m_it; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        virtual const IConstIterator<char>& cbegin() const { return m_const_begin; }
+        virtual const IConstIterator<char>& cbegin() const override { return m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        virtual const IConstIterator<char>& cend() const { return m_const_end; }
+        virtual const IConstIterator<char>& cend() const override { return m_const_end; }
 
         /** \brief Get the const iterator of the container */
-        virtual IConstIterator<char>& const_it() const { cbegin(*m_pconst_it); return (*m_pconst_it); }
+        virtual IConstIterator<char>& const_it() const override { cbegin(*m_pconst_it); return (*m_pconst_it); }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 
@@ -182,13 +182,13 @@ class StringBase : public IString
 
 
         /** \brief Get an item at a specified index */
-        virtual char& operator [] (const nano_stl_size_t index)
+        virtual char& operator [] (const nano_stl_size_t index) override
         {
             return m_c_str[index];
         }
 
         /** \brief Get an item at a specified index */
-        virtual const char& operator [] (const nano_stl_size_t index) const
+        virtual const char& operator [] (const nano_stl_size_t index) const override
         {
             return m_c_str[index];
         }
@@ -198,17 +198,17 @@ class StringBase : public IString
 
 
         /** \brief Get the length in number of chars of the string */
-        virtual nano_stl_size_t getLenght() const { return m_length; }
+        virtual nano_stl_size_t getLenght() const override { return m_length; }
 
         /** \brief Get the underlying C string */
-        virtual const char* cStr() const { return m_c_str; }
+        virtual const char* cStr() const override { return m_c_str; }
 
         /** \brief Get the underlying C string */
-        virtual char* cStr() { return m_c_str; }
+        virtual char* cStr() override { return m_c_str; }
 
 
         /** \brief Format a string */
-        virtual void format(const char* format, ...)
+        virtual void format(const char* format, ...) override
         {
             va_list arg_list;
             va_start(arg_list, format);
@@ -217,7 +217,7 @@ class StringBase : public IString
         }
 
         /** \brief Format a string */
-        virtual void format(const char* format, va_list arg_list)
+        virtual void format(const char* format, va_list arg_list) override
         {
             int ret = NANO_STL_VSNPRINTF(m_c_str, m_size + 1u, format, arg_list);
             if (ret <= 0)
@@ -252,7 +252,7 @@ class StringBase : public IString
 
         
         /** \brief Copy operator */
-        virtual IString& operator = (const IString& copy)
+        virtual IString& operator = (const IString& copy) override
         {
             // Compute new string length
             if (copy.getLenght() > m_size)
@@ -291,7 +291,7 @@ class StringBase : public IString
         }
 
         /** \brief Concatenate operator */
-        virtual IString& operator + (const IString& str)
+        virtual IString& operator + (const IString& str) override
         {
             // Compute new string length
             nano_stl_size_t copy_size = str.getLenght();
@@ -333,7 +333,7 @@ class StringBase : public IString
 
 
         /** \brief Compare operator */
-        virtual bool operator == (const IString& str) const
+        virtual bool operator == (const IString& str) const override
         {
             bool ret = false;
 
@@ -349,16 +349,16 @@ class StringBase : public IString
 
 
         /** \brief Compare operator */
-        virtual bool operator != (const IString& str) const { return !(this->operator==(str)); }
+        virtual bool operator != (const IString& str) const override { return !(this->operator==(str)); }
 
         /** \brief Compare operator */
-        virtual bool operator > (const IString& str) const
+        virtual bool operator > (const IString& str) const override
         {
             return (NANO_STL_STRNCMP(m_c_str, str.cStr(), m_size) > 0);
         }
 
         /** \brief Compare operator */
-        virtual bool operator < (const IString& str) const { return !(this->operator>(str)); }
+        virtual bool operator < (const IString& str) const override { return !(this->operator>(str)); }
 
 
         ////// Implementation of StringBase methods //////
@@ -368,16 +368,16 @@ class StringBase : public IString
 #if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the iterator which points to the start of the container */
-        const void begin(typename IArray<char>::Iterator& it) const { it = m_begin; }
+        const void begin(typename IArray<char>::Iterator& it) const override { it = m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        const void end(typename IArray<char>::Iterator& it) const { it = m_end; }
+        const void end(typename IArray<char>::Iterator& it) const override { it = m_end; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        const void cbegin(typename IArray<char>::ConstIterator& it) const { it = m_const_begin; }
+        const void cbegin(typename IArray<char>::ConstIterator& it) const override { it = m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        const void cend(typename IArray<char>::ConstIterator& it) const { it = m_const_end; }
+        const void cend(typename IArray<char>::ConstIterator& it) const override { it = m_const_end; }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 

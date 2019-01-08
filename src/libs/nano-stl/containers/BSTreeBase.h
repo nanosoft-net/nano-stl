@@ -63,13 +63,13 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
 
 
         /** \brief Get the number of objects that the container can handle */
-        virtual nano_stl_size_t getCapacity() const { return m_size; }
+        virtual nano_stl_size_t getCapacity() const override { return m_size; }
 
         /** \brief Get the number of objects that the container contains */
-        virtual nano_stl_size_t getCount() const { return m_count; }
+        virtual nano_stl_size_t getCount() const override { return m_count; }
 
         /** \brief Check if the container contains an item */
-        virtual bool contains(const ItemType& item) const
+        virtual bool contains(const ItemType& item) const override
         {
             bool contains = false;
 
@@ -86,7 +86,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
 
 
         /** \brief Get the item corresponding to a key */
-        virtual ItemType& operator [] (const KeyType& key)
+        virtual ItemType& operator [] (const KeyType& key) override
         {
             bool left = false;
             Node* current = nullptr;
@@ -102,7 +102,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         }
 
         /** \brief Get the item corresponding to a key */
-        virtual const ItemType& operator [] (const KeyType& key) const
+        virtual const ItemType& operator [] (const KeyType& key) const override
         {
             bool left = false;
             Node* current = nullptr;
@@ -118,7 +118,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         }
 
         /** \brief Add an item to the binary search tree */
-        virtual bool add(const KeyType& key, const ItemType& item)
+        virtual bool add(const KeyType& key, const ItemType& item) override
         {
             bool ret = false;
 
@@ -171,7 +171,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         }
 
         /** \brief Check if the binary search tree contains a specific key */
-        virtual bool containsKey(const KeyType& key) const
+        virtual bool containsKey(const KeyType& key) const override
         {
             bool left = false;
             Node* current = nullptr;
@@ -180,7 +180,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         }
 
         /** \brief Get an item from the binary search tree */
-        virtual bool get(const KeyType& key, ItemType& item) const
+        virtual bool get(const KeyType& key, ItemType& item) const override
         {
             // Look for the item
             bool left = false;
@@ -197,7 +197,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         }
 
         /** \brief Remove an item from the binary search tree */
-        virtual bool remove(const KeyType& key)
+        virtual bool remove(const KeyType& key) override
         {
             // Look for the item
             bool left = false;
@@ -258,7 +258,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         }
 
         /** \brief Remove all the items from the binary search tree */
-        virtual void clear()
+        virtual void clear() override
         {
             if (m_count != 0u)
             {
@@ -273,10 +273,10 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
         }
 
         /** \brief Get the last item which has been modified */
-        virtual ItemType* getLastModified() { return m_last_modified; }
+        virtual ItemType* getLastModified() override { return m_last_modified; }
 
         /** \brief Get the last item which has been modified */
-        virtual const ItemType* getLastModified() const { return m_last_modified; }
+        virtual const ItemType* getLastModified() const override { return m_last_modified; }
 
 
     private:

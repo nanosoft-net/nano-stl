@@ -140,13 +140,13 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 {}
 
                 /** \brief Get the element at the current position */
-                virtual const ItemType& operator * ()
+                virtual const ItemType& operator * () override
                 {
                     return m_current->value;
                 }
 
                 /** \brief Move to the next element */
-                virtual void operator ++ ()
+                virtual void operator ++ () override
                 {
                     if (m_current != NULL)
                     {
@@ -163,7 +163,7 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 }
 
                 /** \brief Move to the previous element */
-                virtual void operator -- ()
+                virtual void operator -- () override
                 {
                     if (m_current != NULL)
                     {
@@ -176,10 +176,10 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 }
 
                 /** \brief Get the position of an iterator */
-                virtual nano_stl_size_t getPosition() const { return m_position; }
+                virtual nano_stl_size_t getPosition() const override { return m_position; }
 
                 /** \brief Get the iterable instance */
-                virtual const IIterable<ItemType>& getIterable() const { return (*m_list); }
+                virtual const IIterable<ItemType>& getIterable() const override { return (*m_list); }
 
                 /** \brief Copy operator */
                 ConstIterator& operator = (const ConstIterator& copy)
@@ -244,13 +244,13 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 {}
 
                 /** \brief Get the element at the current position */
-                virtual ItemType& operator * ()
+                virtual ItemType& operator * () override
                 {
                     return m_current->value;
                 }
 
                 /** \brief Move to the next element */
-                virtual void operator ++ ()
+                virtual void operator ++ () override
                 {
                     if (m_current != NULL)
                     {
@@ -267,7 +267,7 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 }
 
                 /** \brief Move to the previous element */
-                virtual void operator -- ()
+                virtual void operator -- () override
                 {
                     if (m_current != NULL)
                     {
@@ -280,10 +280,10 @@ class IList : public IContainer<ItemType>, public IIterable<ItemType>
                 }
 
                 /** \brief Get the position of an iterator */
-                virtual nano_stl_size_t getPosition() const { return m_position; }
+                virtual nano_stl_size_t getPosition() const override { return m_position; }
 
                 /** \brief Get the iterable instance */
-                virtual const IIterable<ItemType>& getIterable() const { return (*m_list); }
+                virtual const IIterable<ItemType>& getIterable() const override { return (*m_list); }
 
                 /** \brief Copy operator */
                 Iterator& operator = (const Iterator& copy)

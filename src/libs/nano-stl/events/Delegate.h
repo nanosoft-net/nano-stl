@@ -57,25 +57,25 @@ class Delegate : public IDelegate<ReturnType, args...>
         }
 
         /** \brief Invoke the target function or method */
-        virtual ReturnType invoke(args&&... a) const
+        virtual ReturnType invoke(args&&... a) const override
         {
             return (*m_method)(m_obj, static_cast<args&&>(a)...);
         }
 
         /** \brief Call operator to invoke the target function or method */
-        virtual ReturnType operator()(args&&... a) const
+        virtual ReturnType operator()(args&&... a) const override
         {
             return (*m_method)(m_obj, static_cast<args&&>(a)...);
         }
 
         /** \brief Indicate if the delegate points to a valid target function or method */
-        virtual bool isNull() const
+        virtual bool isNull() const override
         {
             return ((m_obj == NULL) || (m_method == NULL));
         }
 
         /** \brief Make the delegate invalid */
-        virtual void reset()
+        virtual void reset() override
         {
             m_obj = NULL;
             m_method = NULL;
