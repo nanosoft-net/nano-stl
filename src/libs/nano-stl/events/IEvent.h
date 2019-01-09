@@ -31,25 +31,52 @@ namespace nano_stl
 #if (__cplusplus >= 201103L)
 
 
+/** \brief Macro to help to instanciate an event handler method object */ 
+#define NANO_STL_EVENT_HANDLER_M(class_name, method, ...)   nano_stl::IEvent<__VA_ARGS__>::EventHandlerM::create<class_name, &class_name::method>(*this);
+
+
+template<typename ReturnType, typename... args>
+class FDelegate;
+
+template<typename ReturnType, typename... args>
+class Delegate;
+
 /** \brief Interface for all events implementations */
 template<typename... args>
 class IEvent
 {
     public:
 
+
+        /** \brief Generic Event handler */
+        typedef IDelegate<void, args...> EventHandler;
+
+        /** \brief Event handler method */
+        typedef Delegate<void, args...> EventHandlerM;
+
+        /** \brief Event handler function */
+        typedef FDelegate<void, args...> EventHandlerF;
+
+
         /** \brief Trigger the event */
         virtual void trigger(args&&... a) const = 0;
 
-        /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, args...>& delegate) = 0;
+        /** \brief Bind a handler to receive event notifications */
+        virtual bool bind(const EventHandler& event_handler) = 0;
 
-        /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, args...>& delegate) = 0;
+        /** \brief Unbind a handler from event notifications */
+        virtual bool unbind(const EventHandler& event_handler) = 0;
 };
 
 
 #else // __cplusplus
 
+
+template<typename ReturnType, typename ArgType>
+class FDelegate;
+
+template<typename ReturnType, typename ArgType>
+class Delegate;
 
 /** \brief Interface for all events implementations */
 template<typename ArgType>
@@ -57,14 +84,25 @@ class IEvent
 {
     public:
 
+
+        /** \brief Generic Event handler */
+        typedef IDelegate<void, ArgType> EventHandler;
+
+        /** \brief Event handler method */
+        typedef Delegate<void, ArgType> EventHandlerM;
+
+        /** \brief Event handler function */
+        typedef FDelegate<void, ArgType> EventHandlerF;
+
+
         /** \brief Trigger the event */
         virtual void trigger(ArgType a) const = 0;
 
-        /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, ArgType>& delegate) = 0;
+        /** \brief Bind a handler to receive event notifications */
+        virtual bool bind(const EventHandler& event_handler) = 0;
 
-        /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, ArgType>& delegate) = 0;
+        /** \brief Unbind a handler from event notifications */
+        virtual bool unbind(const EventHandler& event_handler) = 0;
 };
 
 
@@ -74,14 +112,25 @@ class IEvent<void>
 {
     public:
 
+
+        /** \brief Generic Event handler */
+        typedef IDelegate<void, void> EventHandler;
+
+        /** \brief Event handler method */
+        typedef Delegate<void, void> EventHandlerM;
+
+        /** \brief Event handler function */
+        typedef FDelegate<void, void> EventHandlerF;
+
+
         /** \brief Trigger the event */
         virtual void trigger() const = 0;
 
-        /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, void>& delegate) = 0;
+        /** \brief Bind a handler to receive event notifications */
+        virtual bool bind(const EventHandler& event_handler) = 0;
 
-        /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, void>& delegate) = 0;
+        /** \brief Unbind a handler from event notifications */
+        virtual bool unbind(const EventHandler& event_handler) = 0;
 };
 
 

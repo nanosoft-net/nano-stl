@@ -99,7 +99,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             else
             {
                 NANO_STL_CRITICAL_ERROR();
-                return (*reinterpret_cast<ItemType*>(nullptr));
+                return (*reinterpret_cast<ItemType*>(0));
             }
         }
 
@@ -116,7 +116,7 @@ class BSTreeBase : public IBSTree<KeyType, ItemType>
             else
             {
                 NANO_STL_CRITICAL_ERROR();
-                return (*reinterpret_cast<const ItemType*>(nullptr));
+                return (*reinterpret_cast<const ItemType*>(0));
             }
         }
 

@@ -381,16 +381,16 @@ class StringBase : public IString
 #if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the iterator which points to the start of the container */
-        const void begin(typename IArray<char>::Iterator& it) const override { it = m_begin; }
+        const void begin(typename IArray<char>::Iterator& it) const { it = m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        const void end(typename IArray<char>::Iterator& it) const override { it = m_end; }
+        const void end(typename IArray<char>::Iterator& it) const { it = m_end; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        const void cbegin(typename IArray<char>::ConstIterator& it) const override { it = m_const_begin; }
+        const void cbegin(typename IArray<char>::ConstIterator& it) const { it = m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        const void cend(typename IArray<char>::ConstIterator& it) const override { it = m_const_end; }
+        const void cend(typename IArray<char>::ConstIterator& it) const { it = m_const_end; }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 

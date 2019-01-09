@@ -22,6 +22,7 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #include "IDelegate.h"
+#include "IErrorHandler.h"
 
 namespace nano_stl
 {
@@ -61,12 +62,26 @@ class FDelegate : public IDelegate<ReturnType, args...>
         /** \brief Invoke the target function or method */
         virtual ReturnType invoke(args&&... a) const override
         {
+            #if (NANO_STL_ITEM_ACCESS_CHECK_ENABLE == 1)
+            if (isNull())
+            {
+                NANO_STL_CRITICAL_ERROR();
+            }
+            #endif // NANO_STL_ITEM_ACCESS_CHECK_ENABLE
+
             return (*m_function)(static_cast<args&&>(a)...);
         }
 
         /** \brief Call operator to invoke the target function or method */
         virtual ReturnType operator()(args&&... a) const override
         {
+            #if (NANO_STL_ITEM_ACCESS_CHECK_ENABLE == 1)
+            if (isNull())
+            {
+                NANO_STL_CRITICAL_ERROR();
+            }
+            #endif // NANO_STL_ITEM_ACCESS_CHECK_ENABLE
+
             return (*m_function)(static_cast<args&&>(a)...);
         }
 

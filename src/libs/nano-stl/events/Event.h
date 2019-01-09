@@ -38,37 +38,37 @@ class Event : public IEvent<args...>
     public:
 
         /** \brief Constructor */
-        Event(IArray< const IDelegate<void, args...>* >& delegates)
-        : m_delegates(delegates)
+        Event(IArray< const typename IEvent<args...>::EventHandler* >& event_handlers)
+        : m_event_handlers(event_handlers)
         {}
 
 
         /** \brief Trigger the event */
         virtual void trigger(args&&... a) const override
         {
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; i < size; i++)
             {
-                const IDelegate<void, args...>*& delegate = m_delegates[i];
-                if (delegate != nullptr)
+                const typename IEvent<args...>::EventHandler*& event_handler = m_event_handlers[i];
+                if (event_handler != nullptr)
                 {
-                    delegate->invoke(static_cast<args&&>(a)...);
+                    event_handler->invoke(static_cast<args&&>(a)...);
                 }
             }
         }
 
-        /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, args...>& delegate) override
+        /** \brief Bind a handler to receive event notifications */
+        virtual bool bind(const typename IEvent<args...>::EventHandler& event_handler) override
         {
             bool found = false;
 
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                const IDelegate<void, args...>*& delegate_i = m_delegates[i];
-                if (delegate_i == nullptr)
+                const typename IEvent<args...>::EventHandler*& event_handler_i = m_event_handlers[i];
+                if (event_handler_i == nullptr)
                 {
-                    delegate_i = &delegate;
+                    event_handler_i = &event_handler;
                     found = true;
                 }
             }
@@ -76,18 +76,18 @@ class Event : public IEvent<args...>
             return found;
         }
 
-        /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, args...>& delegate) override
+        /** \brief Unbind a handler from event notifications */
+        virtual bool unbind(const typename IEvent<args...>::EventHandler& event_handler) override
         {
             bool found = false;
 
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                const IDelegate<void, args...>*& delegate_i = m_delegates[i];
-                if (delegate_i == &delegate)
+                const typename IEvent<args...>::EventHandler*& event_handler_i = m_event_handlers[i];
+                if (event_handler_i == &event_handler)
                 {
-                    delegate_i = nullptr;
+                    event_handler_i = nullptr;
                     found = true;
                 }
             }
@@ -98,8 +98,8 @@ class Event : public IEvent<args...>
 
     private:
 
-        /** \brief Delegates to receive the event */
-        IArray< const IDelegate<void, args...>* >& m_delegates;
+        /** \brief Handlers to receive the event */
+        IArray< const typename IEvent<args...>::EventHandler* >& m_event_handlers;
 };
 
 
@@ -113,37 +113,37 @@ class Event : public IEvent<ArgType>
     public:
 
         /** \brief Constructor */
-        Event(IArray< const IDelegate<void, ArgType>* >& delegates)
-        : m_delegates(delegates)
+        Event(IArray< const typename IEvent<ArgType>::EventHandler* >& event_handlers)
+        : m_event_handlers(event_handlers)
         {}
 
 
         /** \brief Trigger the event */
         virtual void trigger(ArgType a) const
         {
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; i < size; i++)
             {
-                const IDelegate<void, ArgType>*& delegate = m_delegates[i];
-                if (delegate != nullptr)
+                const typename IEvent<ArgType>::EventHandler*& event_handler = m_event_handlers[i];
+                if (event_handler != nullptr)
                 {
-                    delegate->invoke(a);
+                    event_handler->invoke(a);
                 }
             }
         }
 
-        /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, ArgType>& delegate)
+        /** \brief Bind a handler to receive event notifications */
+        virtual bool bind(const typename IEvent<ArgType>::EventHandler& event_handler)
         {
             bool found = false;
 
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                const IDelegate<void, ArgType>*& delegate_i = m_delegates[i];
-                if (delegate_i == nullptr)
+                const typename IEvent<ArgType>::EventHandler*& event_handler_i = m_event_handlers[i];
+                if (event_handler_i == nullptr)
                 {
-                    delegate_i = &delegate;
+                    event_handler_i = &event_handler;
                     found = true;
                 }
             }
@@ -151,18 +151,18 @@ class Event : public IEvent<ArgType>
             return found;
         }
 
-        /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, ArgType>& delegate)
+        /** \brief Unbind a handler from event notifications */
+        virtual bool unbind(const typename IEvent<ArgType>::EventHandler& event_handler)
         {
             bool found = false;
 
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                const IDelegate<void, ArgType>*& delegate_i = m_delegates[i];
-                if (delegate_i == &delegate)
+                const typename IEvent<ArgType>::EventHandler*& event_handler_i = m_event_handlers[i];
+                if (event_handler_i == &event_handler)
                 {
-                    delegate_i = nullptr;
+                    event_handler_i = nullptr;
                     found = true;
                 }
             }
@@ -173,8 +173,8 @@ class Event : public IEvent<ArgType>
 
     private:
 
-        /** \brief Delegates to receive the event */
-        IArray< const IDelegate<void, ArgType>* >& m_delegates;
+        /** \brief Handlers to receive the event */
+        IArray< const typename IEvent<ArgType>::EventHandler* >& m_event_handlers;
 };
 
 
@@ -185,37 +185,37 @@ class Event<void> : public IEvent<void>
     public:
 
         /** \brief Constructor */
-        Event(IArray< const IDelegate<void, void>* >& delegates)
-        : m_delegates(delegates)
+        Event(IArray< const typename IEvent<void>::EventHandler* >& event_handlers)
+        : m_event_handlers(event_handlers)
         {}
 
 
         /** \brief Trigger the event */
         virtual void trigger() const
         {
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; i < size; i++)
             {
-                const IDelegate<void, void>*& delegate = m_delegates[i];
-                if (delegate != nullptr)
+                const typename IEvent<void>::EventHandler*& event_handler = m_event_handlers[i];
+                if (event_handler != nullptr)
                 {
-                    delegate->invoke();
+                    event_handler->invoke();
                 }
             }
         }
 
-        /** \brief Bind a delegate to receive event notifications */
-        virtual bool bind(const IDelegate<void, void>& delegate)
+        /** \brief Bind a handler to receive event notifications */
+        virtual bool bind(const typename IEvent<void>::EventHandler& event_handler)
         {
             bool found = false;
 
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                const IDelegate<void, void>*& delegate_i = m_delegates[i];
-                if (delegate_i == nullptr)
+                const typename IEvent<void>::EventHandler*& event_handler_i = m_event_handlers[i];
+                if (event_handler_i == nullptr)
                 {
-                    delegate_i = &delegate;
+                    event_handler_i = &event_handler;
                     found = true;
                 }
             }
@@ -223,18 +223,18 @@ class Event<void> : public IEvent<void>
             return found;
         }
 
-        /** \brief Unbind a delegate from event notifications */
-        virtual bool unbind(const IDelegate<void, void>& delegate)
+        /** \brief Unbind a handler from event notifications */
+        virtual bool unbind(const typename IEvent<void>::EventHandler& event_handler)
         {
             bool found = false;
 
-            const nano_stl_size_t size = m_delegates.getCount();
+            const nano_stl_size_t size = m_event_handlers.getCount();
             for (nano_stl_size_t i = 0; (i < size) && !found; i++)
             {
-                const IDelegate<void, void>*& delegate_i = m_delegates[i];
-                if (delegate_i == &delegate)
+                const typename IEvent<void>::EventHandler*& event_handler_i = m_event_handlers[i];
+                if (event_handler_i == &event_handler)
                 {
-                    delegate_i = nullptr;
+                    event_handler_i = nullptr;
                     found = true;
                 }
             }
@@ -245,8 +245,8 @@ class Event<void> : public IEvent<void>
 
     private:
 
-        /** \brief Delegates to receive the event */
-        IArray< const IDelegate<void, void>* >& m_delegates;
+        /** \brief Handlers to receive the event */
+        IArray< const typename IEvent<void>::EventHandler* >& m_event_handlers;
 };
 
 

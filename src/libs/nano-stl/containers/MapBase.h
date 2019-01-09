@@ -206,16 +206,16 @@ class MapBase : public IMap<KeyType, ItemType>
 #if (NANO_STL_ITERATORS_ENABLED == 1)
 
         /** \brief Get the iterator which points to the start of the container */
-        const void begin(typename IMap<KeyType, ItemType>::Iterator& it) const override { it = m_begin; }
+        const void begin(typename IMap<KeyType, ItemType>::Iterator& it) const { it = m_begin; }
 
         /** \brief Get the iterator which points to the end of the container */
-        const void end(typename IMap<KeyType, ItemType>::Iterator& it) const override { it = m_end; }
+        const void end(typename IMap<KeyType, ItemType>::Iterator& it) const { it = m_end; }
 
         /** \brief Get the const iterator which points to the start of the container */
-        const void cbegin(typename IMap<KeyType, ItemType>::ConstIterator& it) const override { it = m_const_begin; }
+        const void cbegin(typename IMap<KeyType, ItemType>::ConstIterator& it) const { it = m_const_begin; }
 
         /** \brief Get the const iterator which points to the end of the container */
-        const void cend(typename IMap<KeyType, ItemType>::ConstIterator& it) const override { it = m_const_end; }
+        const void cend(typename IMap<KeyType, ItemType>::ConstIterator& it) const { it = m_const_end; }
 
 #endif // NANO_STL_ITERATORS_ENABLED
 

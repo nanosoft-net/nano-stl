@@ -47,12 +47,12 @@ TARGET_PROJECT_DEFINES=$(foreach PROJECT_DEFINE, $(PROJECT_DEFINES), -D$(PROJECT
 OPTIMIZATION_LEVEL = -O0
 
 # Disabled warnings
-DISABLED_WARNINGS = 
+DISABLED_WARNINGS = -Wno-variadic-macros
 
 # Toolchain flags
 COMMON_FLAGS = -g -Wall -D _WIN32_WINNT=0x0601 -D WINVER=0x0601 -DMINGW32 -DWINDOWS $(OPTIMIZATION_LEVEL) $(TARGET_PROJECT_DEFINES)
 CFLAGS = -Wno-main $(COMMON_FLAGS) -fsigned-char $(PROJECT_CFLAGS)
-CXXFLAGS = $(COMMON_FLAGS) $(DISABLED_WARNINGS) -fsigned-char $(PROJECT_CXXFLAGS) -std=c++14 -pedantic -fno-exceptions -fno-unwind-tables -fno-rtti -fno-gnu-keywords -fno-use-cxa-atexit
+CXXFLAGS = $(COMMON_FLAGS) $(DISABLED_WARNINGS) -fsigned-char $(PROJECT_CXXFLAGS) -std=c++17 -pedantic -fno-exceptions -fno-unwind-tables -fno-rtti -fno-gnu-keywords -fno-use-cxa-atexit -fno-check-new
 ASFLAGS = $(COMMON_FLAGS) $(OPTIMIZATION_LEVEL) $(PROJECT_ASFLAGS)
 LDFLAGS = -Wl,-Map=$(patsubst /cygdrive/$(DRIVE_LETTER)%,$(DRIVE_LETTER):%, $(abspath $(patsubst %.exe, %.map, $(BIN_DIR)/$(OUTPUT_NAME)))) $(PROJECT_LDFLAGS)
 ARFLAGS = -c -r $(PROJECT_ARFLAGS)

@@ -20,6 +20,8 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef NANO_STL_H
 #define NANO_STL_H
 
+#include "IErrorHandler.h"
+
 #include "ArrayCount.h"
 #include "ForEach.h"
 
@@ -34,6 +36,8 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 #include "StaticString.h"
 #include "StringView.h"
 
-
+#include "EventHelper.h"
+#include "Delegate.h"
+#include "FDelegate.h"
 
 #endif // NANO_STL_H

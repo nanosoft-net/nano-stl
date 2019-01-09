@@ -8,11 +8,14 @@
                 "${workspaceFolder}/src/apps/demo_app",
                 "${workspaceFolder}/src/libs",
                 "${workspaceFolder}/src/libs/nano-stl",
-                "${workspaceFolder}/src/libs/nano-stl/conf",
                 "${workspaceFolder}/src/libs/nano-stl/containers",
+                "${workspaceFolder}/src/libs/nano-stl/error",
+                "${workspaceFolder}/src/libs/nano-stl/events",
                 "${workspaceFolder}/src/libs/nano-stl/helpers",
                 "${workspaceFolder}/src/libs/nano-stl/interfaces",
-                "${workspaceFolder}/src/libs/nano-stl/memory"
+                "${workspaceFolder}/src/libs/nano-stl/libc",
+                "${workspaceFolder}/src/libs/nano-stl/memory",
+                "${workspaceFolder}/src/libs/nano-stl/strings"
             ],
             "defines": [
                 "_DEBUG",

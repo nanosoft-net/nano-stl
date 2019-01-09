@@ -97,14 +97,14 @@ class ZeroSizeVector : public IVector<ItemType>
         virtual ItemType& operator [] (const nano_stl_size_t index) override
         {
             NANO_STL_CRITICAL_ERROR();
-            return (*reinterpret_cast<ItemType*>(nullptr));
+            return (*reinterpret_cast<ItemType*>(0));
         }
 
         /** \brief Get an item at a specified index */
         virtual const ItemType& operator [] (const nano_stl_size_t index) const override
         {
             NANO_STL_CRITICAL_ERROR();
-            return (*reinterpret_cast<ItemType*>(nullptr));
+            return (*reinterpret_cast<ItemType*>(0));
         }
 
 
