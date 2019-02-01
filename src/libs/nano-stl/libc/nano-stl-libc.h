@@ -65,6 +65,9 @@ char* NANO_STL_LIBC_Itoa(int value, char * str, int base);
 /** \brief Highly portable but non-efficient atof function */
 double NANO_STL_LIBC_Atof(const char* nptr);
 
+/** \brief Highly portable but non-efficient atoi function with radix and string length check */
+int NANO_STL_LIBC_Antoi(const char* str, const int radix, size_t size);
+
 
 #ifdef __cplusplus
 }

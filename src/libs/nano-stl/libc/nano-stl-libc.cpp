@@ -21,9 +21,6 @@ along with Nano-STL.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
-/** \brief Highly portable but non-efficient atoi function with string length check */
-static int NANO_STL_LIBC_Antoi(const char* str, size_t size);
-
 /** \brief  Writes a character inside the given string */
 static int NANO_STL_LIBC_PutChar(char *str, char c);
 
@@ -320,7 +317,7 @@ int NANO_STL_LIBC_Snprintf(char *str, size_t size, const char *format, ...)
 /** \brief Highly portable but non-efficient atoi function */
 int NANO_STL_LIBC_Atoi(const char* str)
 {
-    return NANO_STL_LIBC_Antoi(str, static_cast<size_t>(0xFFFFFFFFu));
+    return NANO_STL_LIBC_Antoi(str, 10u, static_cast<size_t>(0xFFFFFFFFu));
 }
 
 /** \brief Highly portable but non-efficient itoa function */
@@ -392,7 +389,7 @@ double NANO_STL_LIBC_Atof(const char* nptr)
 			count++;
 			nptr++;
 		}
-		int_part = static_cast<double>(NANO_STL_LIBC_Antoi(int_part_str, count));
+		int_part = static_cast<double>(NANO_STL_LIBC_Antoi(int_part_str, 10, count));
 
 		if ((*nptr) == '.')
 		{
@@ -405,7 +402,7 @@ double NANO_STL_LIBC_Atof(const char* nptr)
 			count++;
 			nptr++;
 		}
-		dec_part = static_cast<double>(NANO_STL_LIBC_Antoi(dec_part_str, count));
+		dec_part = static_cast<double>(NANO_STL_LIBC_Antoi(dec_part_str, 10, count));
 		int dec_count = NANO_STL_STRNLEN(dec_part_str, count);
 		while (dec_count != 0)
 		{
@@ -424,14 +421,13 @@ double NANO_STL_LIBC_Atof(const char* nptr)
 	return res;
 }
 
-
-/** \brief Highly portable but non-efficient atoi function with string length check */
-static int NANO_STL_LIBC_Antoi(const char* str, size_t size)
+/** \brief Highly portable but non-efficient atoi function with radix and string length check */
+int NANO_STL_LIBC_Antoi(const char* str, const int radix, size_t size)
 {
     int res = 0;
     unsigned char negative = 0u;
 
-    if ((str != nullptr) && (size != 0))
+    if ((str != nullptr) && (radix >= 2) && (radix <= 16) && (size != 0))
     {
         if ((*str) == '-')
         {
@@ -442,8 +438,20 @@ static int NANO_STL_LIBC_Antoi(const char* str, size_t size)
 
         while (((*str) != 0) && (size != 0))
         {
-            int val = (*str) - '0';
-            res = (res * 10u) + val;
+            int val = 0;
+            if (((*str) >= '0') && ((*str) <= '9'))
+            {
+                val = (*str) - '0';
+            }
+            else if (((*str) >= 'a') && ((*str) <= 'f'))
+            {
+                val = (*str) - 'a' + 10;
+            }
+            else
+            {
+                val = (*str) - 'A' + 10;
+            }
+            res = (res * radix) + val;
             str++;
 			size--;
         }
