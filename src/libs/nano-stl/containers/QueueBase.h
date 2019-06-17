@@ -81,6 +81,16 @@ class QueueBase : public IQueue<ItemType>
         ////// Implementation of IQueue interface //////
 
 
+        /** \brief Remove all the items from the queue */
+        virtual bool clear() override
+        {
+            m_count = 0u;
+            m_read = m_items;
+            m_write = m_items;
+
+            return true;
+        }
+
         /** \brief Add an item to the queue */
         virtual bool push(const ItemType& item) override
         {

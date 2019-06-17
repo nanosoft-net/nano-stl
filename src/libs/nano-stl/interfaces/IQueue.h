@@ -31,6 +31,9 @@ class IQueue : public IContainer<ItemType>
 {
     public:
 
+        /** \brief Remove all the items from the queue */
+        virtual bool clear() = 0;
+
         /** \brief Add an item to the queue */
         virtual bool push(const ItemType& item) = 0;
 
